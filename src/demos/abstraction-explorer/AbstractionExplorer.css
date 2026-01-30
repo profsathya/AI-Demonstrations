@@ -687,6 +687,244 @@
   line-height: 1.7;
 }
 
+/* ===== TASK REMINDER ===== */
+.task-reminder {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #a78bfa;
+}
+
+/* ===== CHALLENGE SCREEN ===== */
+.challenge-screen {
+  background: rgba(239, 68, 68, 0.05);
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: challengeIn 0.5s ease;
+}
+
+@keyframes challengeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.challenge-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.challenge-icon {
+  font-size: 1.5rem;
+}
+
+.challenge-header h3 {
+  margin: 0;
+  color: #fca5a5;
+}
+
+.challenge-task {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.task-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.task-name {
+  font-size: 1rem;
+  color: #f8fafc;
+  font-weight: 500;
+}
+
+.challenge-workspace {
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.workspace-line {
+  margin-bottom: 0.5rem;
+  animation: workspaceLine 0.3s ease backwards;
+}
+
+.workspace-line:nth-child(1) { animation-delay: 0.1s; }
+.workspace-line:nth-child(2) { animation-delay: 0.2s; }
+.workspace-line:nth-child(3) { animation-delay: 0.3s; }
+.workspace-line:nth-child(4) { animation-delay: 0.4s; }
+.workspace-line:nth-child(5) { animation-delay: 0.5s; }
+.workspace-line:nth-child(6) { animation-delay: 0.6s; }
+.workspace-line:nth-child(7) { animation-delay: 0.7s; }
+.workspace-line:nth-child(8) { animation-delay: 0.8s; }
+.workspace-line:nth-child(9) { animation-delay: 0.9s; }
+.workspace-line:nth-child(10) { animation-delay: 1s; }
+.workspace-line:nth-child(11) { animation-delay: 1.1s; }
+
+@keyframes workspaceLine {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.challenge-hint {
+  color: #f59e0b;
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 1rem;
+  animation: fadeUp 0.5s ease;
+}
+
+.challenge-timer {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.give-up-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  border-radius: 12px;
+  color: #fca5a5;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: fadeUp 0.5s ease;
+}
+
+.give-up-btn:hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(220, 38, 38, 0.3));
+  transform: scale(1.02);
+}
+
+/* ===== GAVE UP RESPONSE ===== */
+.response-section.gave-up .response-text {
+  color: #86efac;
+}
+
+/* ===== UNLOCKS DISPLAY ===== */
+.unlocks-display {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(6, 182, 212, 0.1));
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  animation: unlocksIn 0.5s ease;
+  text-align: center;
+}
+
+@keyframes unlocksIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.unlock-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #86efac;
+  font-weight: 600;
+}
+
+.unlock-icon {
+  font-size: 1.5rem;
+}
+
+.unlock-text {
+  color: #e2e8f0;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.new-powers {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.powers-label {
+  display: block;
+  color: #fcd34d;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.powers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.powers-list li {
+  color: #cbd5e1;
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.9rem;
+  animation: powerIn 0.4s ease backwards;
+}
+
+.powers-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #4ade80;
+}
+
+@keyframes powerIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== STACK LABEL ===== */
+.stack-label {
+  font-size: 0.7rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 0.5rem;
+}
+
+/* ===== DOMAIN CARD TEXT ===== */
+.domain-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.domain-task {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 500px) {
   .abstraction-home,
@@ -759,5 +997,22 @@
 
   .big-brain {
     font-size: 3rem;
+  }
+
+  .challenge-workspace {
+    font-size: 0.7rem;
+    padding: 0.75rem;
+  }
+
+  .workspace-line {
+    margin-bottom: 0.35rem;
+  }
+
+  .unlocks-display {
+    padding: 1rem;
+  }
+
+  .powers-list li {
+    font-size: 0.85rem;
   }
 }

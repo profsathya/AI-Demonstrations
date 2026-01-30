@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import './AbstractionExplorer.css'
 
 // Journey stages for the programming domain
@@ -7,49 +7,63 @@ const PROGRAMMING_JOURNEY = [
     level: 0,
     name: 'Transistors',
     complexity: [
-      '10110000 01100001 00000011',
-      'MOV EAX, [0x7FFF0004]',
-      'XOR ECX, ECX',
-      'JNZ 0x00401000',
-      'Voltage: 3.3V → 0V → 3.3V',
-      'Clock cycle: 0.3 nanoseconds',
-      'Cache miss penalty: 200 cycles',
-      'Branch prediction: 95.2%',
+      '10110000 01100001',
+      'Voltage: 3.3V → 0V',
+      'Clock: 0.3 nanoseconds',
     ],
     question: 'Want to write "Hello World" by controlling billions of tiny switches?',
     noResponse: "Yeah... that sounds impossible.",
     insight: "Let's hide all that and give you something simpler...",
-    emoji: '🔌'
+    emoji: '🔌',
+    // Challenge when they say "I'll try"
+    challenge: {
+      task: 'Set these transistor voltages to store the letter "H"',
+      display: ['Gate A7: ___ V', 'Gate B3: ___ V', 'Gate C1: ___ V', 'Gate D9: ___ V', 'Gate E2: ___ V', 'Gate F6: ___ V', 'Gate G4: ___ V', 'Gate H8: ___ V'],
+      hint: '(Hint: H = 01001000 in binary, each bit needs specific voltage timing...)',
+      giveUpText: "This is overwhelming... there must be a better way"
+    },
+    // What becomes possible at the NEXT level
+    nextLevelUnlocks: null // First level, nothing before it
   },
   {
     level: 1,
     name: 'Machine Code',
     complexity: [
-      '48 65 6C 6C 6F',
       'B8 04 00 00 00',
       'BB 01 00 00 00',
       'CD 80',
     ],
-    question: 'How about memorizing hundreds of number codes?',
-    noResponse: "Still pretty rough...",
+    question: 'Better! But want to memorize hundreds of hex codes?',
+    noResponse: "Still cryptic...",
     insight: "Let's give those numbers human-readable names...",
-    emoji: '🔢'
+    emoji: '🔢',
+    challenge: {
+      task: 'Write the machine code to print "Hi"',
+      display: ['Byte 1: ___', 'Byte 2: ___', 'Byte 3: ___', 'Byte 4: ___', '(Look up: syscall numbers, register codes, ASCII values...)'],
+      hint: '(You need to memorize: B8=mov eax, BB=mov ebx, CD=int...)',
+      giveUpText: "I can't memorize all these codes..."
+    },
+    levelUnlocks: "You no longer manage individual transistors! 🎉"
   },
   {
     level: 2,
     name: 'Assembly',
     complexity: [
-      'section .data',
-      '  msg db "Hello"',
-      'section .text',
-      '  mov eax, 4',
-      '  mov ebx, 1',
-      '  int 0x80',
+      'mov eax, 4',
+      'mov ebx, 1',
+      'int 0x80',
     ],
-    question: 'Want to manually manage every memory address and register?',
-    noResponse: "Getting better, but still tedious.",
-    insight: "Let's make it read almost like English...",
-    emoji: '⚙️'
+    question: 'Readable! But want to manage every register and memory address?',
+    noResponse: "Getting better, but tedious.",
+    insight: "What if the computer figured out the registers for you...",
+    emoji: '⚙️',
+    challenge: {
+      task: 'Write assembly to print "Hello World"',
+      display: ['section .data', '  msg db "Hello World",0xa', '  len equ $ - msg', 'section .text', '  global _start', '_start:', '  mov eax, ???', '  mov ebx, ???', '  mov ecx, ???', '  mov edx, ???', '  int 0x80'],
+      hint: '(You need: syscall numbers, stdout fd, string address, length calculation...)',
+      giveUpText: "So many details to track..."
+    },
+    levelUnlocks: "Hex codes are hidden! You can read the instructions now."
   },
   {
     level: 3,
@@ -57,24 +71,29 @@ const PROGRAMMING_JOURNEY = [
     complexity: [
       'print("Hello World")',
     ],
-    question: 'This is it! One line. Does this feel better?',
-    yesResponse: "ONE LINE does what took dozens before!",
+    question: 'ONE LINE! Does this feel better?',
+    yesResponse: "That's it! The computer handles everything else!",
     insight: "But wait... we can go even higher...",
     emoji: '💻',
-    isBreakthrough: true
+    isBreakthrough: true,
+    levelUnlocks: "Memory, registers, syscalls - ALL hidden! Just say what you want.",
+    newPowers: ['Write once, run anywhere', 'Automatic memory management', 'Error messages you can read', '1000x faster to write']
   },
   {
     level: 4,
     name: 'Frameworks',
     complexity: [
       '<Button onClick={sayHello}>',
-      '  Click Me',
+      '  Say Hello',
       '</Button>',
     ],
-    question: 'What if common patterns were pre-built for you?',
-    yesResponse: "Thousands of lines, wrapped in simple components!",
-    insight: "And now, the ultimate abstraction...",
-    emoji: '📦'
+    question: 'What if common patterns were pre-built?',
+    yesResponse: "Thousands of lines of code, wrapped in simple components!",
+    insight: "And now, the ultimate level...",
+    emoji: '📦',
+    isBreakthrough: true,
+    levelUnlocks: "Browser compatibility, event handling, DOM manipulation - handled!",
+    newPowers: ['Build in hours, not months', 'Stand on giants\' shoulders', 'Focus on YOUR unique idea']
   },
   {
     level: 5,
@@ -84,10 +103,12 @@ const PROGRAMMING_JOURNEY = [
       ' with a contact form"',
     ],
     question: 'What if you just... described what you want?',
-    yesResponse: "You don't even need to know it's code underneath!",
+    yesResponse: "You don't even need to know programming exists underneath!",
     insight: null,
     emoji: '🤖',
-    isFinal: true
+    isFinal: true,
+    levelUnlocks: "ALL programming knowledge - optional! Just describe your vision.",
+    newPowers: ['Anyone can create', 'Ideas → Reality in minutes', 'Focus purely on WHAT, not HOW']
   }
 ]
 
@@ -96,135 +117,166 @@ const DOMAINS = {
     id: 'programming',
     title: 'Programming',
     icon: '💻',
-    journey: PROGRAMMING_JOURNEY
+    journey: PROGRAMMING_JOURNEY,
+    taskDescription: 'Print "Hello World"'
   },
   interfaces: {
     id: 'interfaces',
     title: 'Interfaces',
     icon: '🖥️',
+    taskDescription: 'Set a 5-minute timer',
     journey: [
       {
-        level: 0, name: 'Switches', emoji: '🔘',
-        complexity: ['Flip switch A7', 'Flip switch B3', 'Read lamp C1', 'Punch card row 1: ○●○○●●○●'],
-        question: 'Want to flip physical switches and punch holes in cards?',
+        level: 0, name: 'Switches & Cards', emoji: '🔘',
+        complexity: ['Flip switch A7', 'Punch card: ○●○●●'],
+        question: 'Want to flip switches and punch cards to set a timer?',
         noResponse: "That's exhausting...",
-        insight: "Let's type commands instead..."
+        insight: "Let's type commands instead...",
+        challenge: {
+          task: 'Punch the right holes to encode "5 minutes"',
+          display: ['Row 1: ○ ○ ○ ○ ○ ○ ○ ○', 'Row 2: ○ ○ ○ ○ ○ ○ ○ ○', 'Row 3: ○ ○ ○ ○ ○ ○ ○ ○', '(Which holes represent "5"? Which represent "minutes"? Which row is data vs control?)'],
+          hint: '(You need the codebook to know which holes mean what...)',
+          giveUpText: "I don't even know where to start..."
+        }
       },
       {
         level: 1, name: 'Command Line', emoji: '⌨️',
-        complexity: ['$ ls -la /home/user', '$ grep -r "error" ./logs', '$ chmod 755 script.sh'],
-        question: 'Want to memorize hundreds of text commands?',
+        complexity: ['$ sleep 300 && echo "Timer done" && afplay /System/Library/Sounds/Glass.aiff'],
+        question: 'Want to memorize command syntax?',
         noResponse: "Too much to remember...",
-        insight: "What if you could just click on things..."
+        insight: "What if you could just click...",
+        challenge: {
+          task: 'Type the command to set a 5-minute timer with sound',
+          display: ['$ _______', '(What\'s the sleep command? How many seconds in 5 min? How to play sound? Which sound file?)'],
+          hint: '(sleep uses seconds, so 5 min = ???, then chain with && ...)',
+          giveUpText: "I have to calculate seconds AND know sound file paths?"
+        },
+        levelUnlocks: "No more physical cards! Just type words."
       },
       {
         level: 2, name: 'GUI', emoji: '🖱️',
-        complexity: ['📁 Double-click folder', '🗑️ Drag to trash', '📋 Right-click → Copy'],
-        question: 'Click, drag, drop. No commands to memorize!',
-        yesResponse: "So intuitive a child can do it!",
-        insight: "But we can go simpler...",
-        isBreakthrough: true
+        complexity: ['🖱️ Click Clock app', '➕ Click "+"', '⏱️ Set 5:00'],
+        question: 'Click, drag, done. No memorization needed!',
+        yesResponse: "A child could do this!",
+        insight: "But we can go even simpler...",
+        isBreakthrough: true,
+        levelUnlocks: "Commands are hidden! Just click what you see.",
+        newPowers: ['Discoverable interface', 'No memorization', 'Visual feedback']
       },
       {
         level: 3, name: 'Touch', emoji: '👆',
-        complexity: ['👆 Tap', '👋 Swipe', '🤏 Pinch'],
-        question: 'What about using your fingers directly?',
-        yesResponse: "Toddlers figure this out instantly!",
-        insight: "And even simpler..."
+        complexity: ['👆 Tap Clock', '👆 Tap Timer', '👆 Tap 5:00'],
+        question: 'Just tap with your finger!',
+        yesResponse: "Toddlers figure this out!",
+        insight: "One more level...",
+        isBreakthrough: true,
+        levelUnlocks: "No mouse needed! Use your fingers naturally.",
+        newPowers: ['Intuitive gestures', 'Mobile anywhere', 'No hardware skills needed']
       },
       {
         level: 4, name: 'Voice', emoji: '🗣️',
         complexity: ['"Hey Siri,', 'set a timer', 'for 5 minutes"'],
         question: 'What if you just... talked?',
-        yesResponse: "No learning required. Just speak naturally.",
-        isFinal: true
-      }
-    ]
-  },
-  transportation: {
-    id: 'transportation',
-    title: 'Getting Around',
-    icon: '🚗',
-    journey: [
-      {
-        level: 0, name: 'Walking', emoji: '🚶',
-        complexity: ['Left foot', 'Right foot', 'Watch for rocks', 'Feel the heat', 'Getting tired...'],
-        question: 'Want to walk 20 miles to the next city?',
-        noResponse: "My feet hurt just thinking about it...",
-        insight: "Let an animal do the walking..."
-      },
-      {
-        level: 1, name: 'Horse', emoji: '🐴',
-        complexity: ['Feed the horse', 'Direct the reins', 'Find water', 'Rest the animal'],
-        question: 'Better, but you still need to care for it. Worth it?',
-        noResponse: "Still a lot of work...",
-        insight: "What if the 'horse' never got tired..."
-      },
-      {
-        level: 2, name: 'Driving', emoji: '🚗',
-        complexity: ['Gas pedal', 'Brake pedal', 'Steering wheel', 'Check mirrors'],
-        question: 'Push pedals, turn wheel. Simple enough?',
-        yesResponse: "You don't need to know how engines work!",
-        insight: "But you still have to drive...",
-        isBreakthrough: true
-      },
-      {
-        level: 3, name: 'Uber', emoji: '📱',
-        complexity: ['📱 Tap', '🚗 Wait', '✨ Arrive'],
-        question: 'What if you didn\'t even need to drive?',
-        yesResponse: "The entire skill of driving: abstracted away!",
-        insight: "And soon..."
-      },
-      {
-        level: 4, name: 'Self-Driving', emoji: '🤖',
-        complexity: ['"Take me to', 'the airport"', '💤 Sleep'],
-        question: 'What if you just told it where and went to sleep?',
-        yesResponse: "All driving knowledge: unnecessary.",
-        isFinal: true
+        yesResponse: "Zero learning required. Just speak!",
+        isFinal: true,
+        levelUnlocks: "All interface knowledge - unnecessary! Just speak naturally.",
+        newPowers: ['Hands-free', 'Natural language', 'Accessible to everyone']
       }
     ]
   }
 }
 
-// Animated code rain effect for complexity
-function ComplexityDisplay({ items, isHiding, isSimple }) {
+// Challenge screen component
+function ChallengeScreen({ challenge, onGiveUp, taskName }) {
+  const [seconds, setSeconds] = useState(0)
+  const [showHint, setShowHint] = useState(false)
+  const [showGiveUp, setShowGiveUp] = useState(false)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds(s => s + 1)
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    if (seconds >= 3) setShowHint(true)
+    if (seconds >= 6) setShowGiveUp(true)
+  }, [seconds])
+
   return (
-    <div className={`complexity-display ${isHiding ? 'hiding' : ''} ${isSimple ? 'simple' : ''}`}>
-      {items.map((item, i) => (
-        <div
-          key={i}
-          className="complexity-line"
-          style={{ animationDelay: `${i * 0.1}s` }}
-        >
-          {item}
+    <div className="challenge-screen">
+      <div className="challenge-header">
+        <span className="challenge-icon">💪</span>
+        <h3>OK, let's try!</h3>
+      </div>
+
+      <div className="challenge-task">
+        <span className="task-label">Your task:</span>
+        <span className="task-name">{challenge.task}</span>
+      </div>
+
+      <div className="challenge-workspace">
+        {challenge.display.map((line, i) => (
+          <div key={i} className="workspace-line">{line}</div>
+        ))}
+      </div>
+
+      {showHint && (
+        <div className="challenge-hint">
+          {challenge.hint}
         </div>
-      ))}
+      )}
+
+      <div className="challenge-timer">
+        ⏱️ {seconds}s elapsed...
+      </div>
+
+      {showGiveUp && (
+        <button className="give-up-btn" onClick={onGiveUp}>
+          😅 {challenge.giveUpText}
+        </button>
+      )}
     </div>
   )
 }
 
-// The boxing animation when abstracting
-function AbstractionBox({ children, level, isBoxing }) {
+// What you unlocked display
+function UnlocksDisplay({ unlocks, newPowers }) {
   return (
-    <div className={`abstraction-box ${isBoxing ? 'boxing' : ''}`}>
-      <div className="box-label">L{level}</div>
-      {children}
+    <div className="unlocks-display">
+      <div className="unlock-header">
+        <span className="unlock-icon">🔓</span>
+        <span>What this level hides:</span>
+      </div>
+      <p className="unlock-text">{unlocks}</p>
+
+      {newPowers && newPowers.length > 0 && (
+        <div className="new-powers">
+          <span className="powers-label">✨ New abilities unlocked:</span>
+          <ul className="powers-list">
+            {newPowers.map((power, i) => (
+              <li key={i} style={{ animationDelay: `${i * 0.15}s` }}>{power}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
 
 // Stack of previous abstractions
-function AbstractionStack({ levels, currentLevel }) {
+function AbstractionStack({ levels }) {
+  if (levels.length === 0) return null
+
   return (
     <div className="abstraction-stack">
-      {levels.slice(0, currentLevel).reverse().map((lvl, i) => (
+      <span className="stack-label">Hidden below:</span>
+      {levels.map((lvl, i) => (
         <div
           key={lvl.level}
           className="stacked-level"
-          style={{
-            '--stack-depth': i,
-            opacity: 1 - (i * 0.15)
-          }}
+          style={{ opacity: 1 - (i * 0.12) }}
         >
           <span className="stack-emoji">{lvl.emoji}</span>
           <span className="stack-name">{lvl.name}</span>
@@ -236,46 +288,83 @@ function AbstractionStack({ levels, currentLevel }) {
 
 function JourneyExplorer({ domain, onComplete, onBack }) {
   const [stage, setStage] = useState(0)
-  const [phase, setPhase] = useState('show') // show, question, response, boxing, insight
+  const [phase, setPhase] = useState('show') // show, question, challenge, gaveUp, response, boxing, insight, unlocks
   const [boxedLevels, setBoxedLevels] = useState([])
 
   const currentStep = domain.journey[stage]
-  const isLastStage = stage === domain.journey.length - 1
 
-  const handleResponse = (answer) => {
-    if (answer === 'no' || (answer === 'yes' && currentStep.isBreakthrough)) {
+  const handleResponse = useCallback((answer) => {
+    if (answer === 'no') {
       setPhase('response')
       setTimeout(() => {
-        if (!currentStep.isFinal) {
-          setPhase('boxing')
-          setTimeout(() => {
-            setBoxedLevels([...boxedLevels, currentStep])
+        setPhase('boxing')
+        setTimeout(() => {
+          setBoxedLevels(prev => [...prev, currentStep])
+          if (currentStep.insight) {
             setPhase('insight')
-            setTimeout(() => {
-              setStage(stage + 1)
-              setPhase('show')
-            }, 2000)
-          }, 1500)
-        } else {
+            setTimeout(() => advanceToNextLevel(), 2000)
+          } else {
+            advanceToNextLevel()
+          }
+        }, 1500)
+      }, 1500)
+    } else if (answer === 'yes-hard') {
+      // They want to try - show the challenge!
+      setPhase('challenge')
+    } else if (answer === 'yes' && (currentStep.isBreakthrough || currentStep.isFinal)) {
+      setPhase('response')
+      setTimeout(() => {
+        if (currentStep.isFinal) {
           setPhase('complete')
+        } else {
+          // Show what this level unlocked
+          setPhase('unlocks')
+          setTimeout(() => {
+            setPhase('boxing')
+            setTimeout(() => {
+              setBoxedLevels(prev => [...prev, currentStep])
+              if (currentStep.insight) {
+                setPhase('insight')
+                setTimeout(() => advanceToNextLevel(), 2000)
+              } else {
+                advanceToNextLevel()
+              }
+            }, 1500)
+          }, 3000)
         }
       }, 1500)
-    } else if (answer === 'yes' && !currentStep.isBreakthrough) {
-      // They said yes to something hard - playful response
-      setPhase('response')
-      setTimeout(() => {
-        setPhase('question')
-      }, 2000)
     }
-  }
+  }, [currentStep, stage])
 
-  const showQuestion = () => {
-    setPhase('question')
-  }
+  const handleGiveUp = useCallback(() => {
+    setPhase('gaveUp')
+    setTimeout(() => {
+      setPhase('boxing')
+      setTimeout(() => {
+        setBoxedLevels(prev => [...prev, currentStep])
+        // Show what the next level unlocks
+        const nextStep = domain.journey[stage + 1]
+        if (nextStep && nextStep.levelUnlocks) {
+          setPhase('unlocks-next')
+          setTimeout(() => advanceToNextLevel(), 3000)
+        } else if (currentStep.insight) {
+          setPhase('insight')
+          setTimeout(() => advanceToNextLevel(), 2000)
+        } else {
+          advanceToNextLevel()
+        }
+      }, 1500)
+    }, 1500)
+  }, [currentStep, stage, domain.journey])
+
+  const advanceToNextLevel = useCallback(() => {
+    setStage(s => s + 1)
+    setPhase('show')
+  }, [])
 
   useEffect(() => {
     if (phase === 'show') {
-      const timer = setTimeout(showQuestion, 2000)
+      const timer = setTimeout(() => setPhase('question'), 1500)
       return () => clearTimeout(timer)
     }
   }, [phase, stage])
@@ -299,14 +388,16 @@ function JourneyExplorer({ domain, onComplete, onBack }) {
         </div>
 
         <div className="complete-message">
-          <h2>🎉 You Just Climbed the Abstraction Ladder!</h2>
-          <p>Each level <strong>hid the complexity below</strong> so you could focus on what matters.</p>
+          <h2>🎉 You Climbed the Abstraction Ladder!</h2>
+          <p>Each level <strong>hid complexity</strong> AND <strong>unlocked new powers</strong>.</p>
+
           <div className="aha-final">
             <span className="aha-icon">💡</span>
             <p>
-              You don't need to understand transistors to write code.<br/>
-              You don't need to write code to build an app.<br/>
-              <strong>That's the power of abstraction.</strong>
+              <strong>The same task: "{domain.taskDescription}"</strong><br/><br/>
+              At Level 0: Nearly impossible<br/>
+              At Level {domain.journey.length - 1}: Trivially easy<br/><br/>
+              <em>That's the power of abstraction.</em>
             </p>
           </div>
         </div>
@@ -323,11 +414,11 @@ function JourneyExplorer({ domain, onComplete, onBack }) {
     )
   }
 
+  const nextStep = domain.journey[stage + 1]
+
   return (
     <div className="journey-explorer">
-      <button className="back-button" onClick={onBack}>
-        ← Back
-      </button>
+      <button className="back-button" onClick={onBack}>← Back</button>
 
       <div className="journey-progress">
         {domain.journey.map((_, i) => (
@@ -338,9 +429,7 @@ function JourneyExplorer({ domain, onComplete, onBack }) {
         ))}
       </div>
 
-      {boxedLevels.length > 0 && (
-        <AbstractionStack levels={boxedLevels} currentLevel={boxedLevels.length} />
-      )}
+      <AbstractionStack levels={[...boxedLevels].reverse()} />
 
       <div className="journey-stage">
         <div className="level-header">
@@ -351,13 +440,31 @@ function JourneyExplorer({ domain, onComplete, onBack }) {
           </div>
         </div>
 
-        <AbstractionBox level={currentStep.level} isBoxing={phase === 'boxing'}>
-          <ComplexityDisplay
-            items={currentStep.complexity}
-            isHiding={phase === 'boxing'}
-            isSimple={currentStep.isBreakthrough || currentStep.isFinal}
+        {/* Current task reminder */}
+        <div className="task-reminder">
+          <span>Task: {domain.taskDescription}</span>
+        </div>
+
+        {phase === 'challenge' && currentStep.challenge && (
+          <ChallengeScreen
+            challenge={currentStep.challenge}
+            onGiveUp={handleGiveUp}
+            taskName={domain.taskDescription}
           />
-        </AbstractionBox>
+        )}
+
+        {phase !== 'challenge' && (
+          <div className={`abstraction-box ${phase === 'boxing' ? 'boxing' : ''}`}>
+            <div className="box-label">L{currentStep.level}</div>
+            <div className={`complexity-display ${phase === 'boxing' ? 'hiding' : ''} ${currentStep.isBreakthrough || currentStep.isFinal ? 'simple' : ''}`}>
+              {currentStep.complexity.map((item, i) => (
+                <div key={i} className="complexity-line" style={{ animationDelay: `${i * 0.1}s` }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {phase === 'question' && (
           <div className="question-section">
@@ -372,8 +479,8 @@ function JourneyExplorer({ domain, onComplete, onBack }) {
                   <button className="response-btn no" onClick={() => handleResponse('no')}>
                     No way 😅
                   </button>
-                  <button className="response-btn yes-hard" onClick={() => handleResponse('yes')}>
-                    I'll try... 💪
+                  <button className="response-btn yes-hard" onClick={() => handleResponse('yes-hard')}>
+                    I'll try! 💪
                   </button>
                 </>
               )}
@@ -389,11 +496,33 @@ function JourneyExplorer({ domain, onComplete, onBack }) {
           </div>
         )}
 
+        {phase === 'gaveUp' && (
+          <div className="response-section gave-up">
+            <p className="response-text">
+              😌 It's OK! That's exactly why we build abstractions...
+            </p>
+          </div>
+        )}
+
         {phase === 'insight' && currentStep.insight && (
           <div className="insight-section">
             <span className="insight-arrow">↑</span>
             <p className="insight-text">{currentStep.insight}</p>
           </div>
+        )}
+
+        {phase === 'unlocks' && currentStep.levelUnlocks && (
+          <UnlocksDisplay
+            unlocks={currentStep.levelUnlocks}
+            newPowers={currentStep.newPowers}
+          />
+        )}
+
+        {phase === 'unlocks-next' && nextStep && nextStep.levelUnlocks && (
+          <UnlocksDisplay
+            unlocks={nextStep.levelUnlocks}
+            newPowers={nextStep.newPowers}
+          />
         )}
       </div>
     </div>
@@ -404,16 +533,14 @@ function Synthesis({ onBack }) {
   const [revealed, setRevealed] = useState(0)
 
   const insights = [
-    { icon: '📦', title: 'Boxing Complexity', text: 'Each layer puts a "box" around the messy details, showing only what you need.' },
-    { icon: '🎯', title: 'Right Level, Right Job', text: 'Work at the level that matches your task. Don\'t go lower than needed.' },
-    { icon: '🔄', title: 'It\'s Everywhere', text: 'Money, cars, phones, physics—everything uses layers of abstraction.' },
+    { icon: '📦', title: 'Each Layer Hides & Enables', text: 'Abstraction isn\'t just hiding complexity—it UNLOCKS new abilities you couldn\'t have otherwise.' },
+    { icon: '🎯', title: 'Same Task, Different Effort', text: 'The same goal can be trivial or impossible depending on your abstraction level.' },
+    { icon: '🏗️', title: 'You Can Build Layers Too', text: 'Every function you write, every API you design—you\'re creating abstractions for others (or future you).' },
   ]
 
   return (
     <div className="synthesis-view">
-      <button className="back-button" onClick={onBack}>
-        ← Back
-      </button>
+      <button className="back-button" onClick={onBack}>← Back</button>
 
       <div className="synthesis-header">
         <span className="big-brain">🧠</span>
@@ -443,13 +570,14 @@ function Synthesis({ onBack }) {
       {revealed >= 3 && (
         <div className="final-wisdom">
           <p className="wisdom-text">
-            <strong>The superpower isn't just using abstractions.</strong><br/>
-            It's knowing when to peek beneath them,<br/>
-            and when to build new ones.
+            <strong>The real superpower:</strong><br/>
+            Knowing which level to work at,<br/>
+            when to peek beneath,<br/>
+            and when to build new layers.
           </p>
           <p className="wisdom-call">
-            Next time you use anything without understanding its internals—<br/>
-            smile. You're standing on layers of human ingenuity. 🏗️
+            Next time something feels impossibly complex—<br/>
+            ask: "Is there a higher abstraction for this?" 🪜
           </p>
         </div>
       )}
@@ -458,7 +586,7 @@ function Synthesis({ onBack }) {
 }
 
 export default function AbstractionExplorer() {
-  const [view, setView] = useState('home') // home, journey, synthesis
+  const [view, setView] = useState('home')
   const [selectedDomain, setSelectedDomain] = useState(null)
 
   const startJourney = (domainId) => {
@@ -485,18 +613,18 @@ export default function AbstractionExplorer() {
       <div className="home-hero">
         <div className="hero-visual">
           <div className="layer-preview">
-            <div className="preview-box l5">Simple</div>
+            <div className="preview-box l5">✨ Easy</div>
             <div className="preview-box l4">↑</div>
-            <div className="preview-box l3">↑</div>
+            <div className="preview-box l3">↑ abstractions</div>
             <div className="preview-box l2">↑</div>
             <div className="preview-box l1">↑</div>
-            <div className="preview-box l0">Complex</div>
+            <div className="preview-box l0">😰 Hard</div>
           </div>
         </div>
         <h1>Abstraction Explorer</h1>
         <p className="hero-subtitle">
           Experience how layers of abstraction<br/>
-          make the impossible feel easy
+          turn the impossible into the trivial
         </p>
       </div>
 
@@ -510,8 +638,11 @@ export default function AbstractionExplorer() {
               onClick={() => startJourney(domain.id)}
             >
               <span className="domain-icon">{domain.icon}</span>
-              <span className="domain-title">{domain.title}</span>
-              <span className="domain-cta">Start Journey →</span>
+              <div className="domain-text">
+                <span className="domain-title">{domain.title}</span>
+                <span className="domain-task">Task: {domain.taskDescription}</span>
+              </div>
+              <span className="domain-cta">→</span>
             </button>
           ))}
         </div>
