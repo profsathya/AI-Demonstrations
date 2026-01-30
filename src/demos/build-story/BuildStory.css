@@ -908,6 +908,108 @@
   color: var(--primary);
 }
 
+/* ========== TIME BADGES ========== */
+.time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(6, 182, 212, 0.2));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #22c55e;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  animation: badgePop 0.5s ease backwards;
+  animation-delay: 0.3s;
+}
+
+.time-icon {
+  font-size: 1rem;
+}
+
+/* ========== TIME BREAKDOWN ========== */
+.time-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 1.5rem auto 0;
+}
+
+.time-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 40px;
+  align-items: center;
+  gap: 0.75rem;
+  animation: timeSlide 0.4s ease backwards;
+}
+
+.time-item:nth-child(1) { animation-delay: 0.1s; }
+.time-item:nth-child(2) { animation-delay: 0.2s; }
+.time-item:nth-child(3) { animation-delay: 0.3s; }
+.time-item:nth-child(4) { animation-delay: 0.4s; }
+.time-item:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes timeSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.time-label {
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.time-bar {
+  height: 8px;
+  background: var(--surface);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.time-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--width, 0);
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 4px;
+  animation: barGrow 0.8s ease backwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes barGrow {
+  from { width: 0; }
+  to { width: var(--width); }
+}
+
+.time-min {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.stat-card.highlight {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(6, 182, 212, 0.15));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.stat-card.highlight .stat-value {
+  color: #22c55e;
+}
+
 /* ========== SECURITY SLIDES ========== */
 .slide-security-request {
   display: flex;
