@@ -20,9 +20,17 @@
 // Import demo components here
 import MindGrid from './mind-grid/MindGrid'
 import DevPath from './dev-path/DevPath'
+import BuildStory from './build-story/BuildStory'
 
 // Register all demos here
 export const demos = {
+  'build-story': {
+    title: 'How This Was Built',
+    description: 'An interactive story of the human-AI collaboration that created these demos. See the conversation, decisions, and technology behind it all.',
+    icon: '📖',
+    tags: ['story', 'education', 'collaboration', 'meta'],
+    component: BuildStory
+  },
   'mind-grid': {
     title: 'Mind Grid',
     description: 'A pattern memory game with evolving mechanics. Test your spatial reasoning through 30+ levels of increasing challenge.',
