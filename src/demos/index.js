@@ -19,6 +19,7 @@
 
 // Import demo components here
 import MindGrid from './mind-grid/MindGrid'
+import DevPath from './dev-path/DevPath'
 
 // Register all demos here
 export const demos = {
@@ -28,5 +29,12 @@ export const demos = {
     icon: '🧠',
     tags: ['game', 'puzzle', 'memory', 'mobile-friendly'],
     component: MindGrid
+  },
+  'dev-path': {
+    title: 'DevPath',
+    description: 'A productivity app for CS students to build career-ready habits, track skills, and prepare for the AI-era job market.',
+    icon: '🚀',
+    tags: ['productivity', 'career', 'habits', 'mobile-friendly'],
+    component: DevPath
   },
 }
