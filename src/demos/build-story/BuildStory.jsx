@@ -1,259 +1,308 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './BuildStory.css'
 
-const STORY_CHAPTERS = [
-  {
-    id: 'intro',
-    phase: 'The Beginning',
-    title: 'An Idea Takes Shape',
-    role: 'human',
-    content: {
-      quote: "I want to make multiple demonstrations of your capabilities in this repo and deploy it on my Netlify account seamlessly. It will help my students see such demos so they understand the capabilities of this technology.",
-      insight: "A professor with a vision: help students understand AI capabilities through hands-on, interactive demonstrations they can experience themselves.",
-      visual: 'lightbulb'
+// Animated typing effect hook
+function useTypewriter(text, speed = 30, start = false) {
+  const [displayed, setDisplayed] = useState('')
+
+  useEffect(() => {
+    if (!start) {
+      setDisplayed('')
+      return
     }
-  },
-  {
-    id: 'infrastructure',
-    phase: 'Foundation',
-    title: 'Building the Infrastructure',
-    role: 'ai',
-    content: {
-      decision: "Before building any demos, we need a solid foundation that makes adding new demos effortless.",
-      approach: [
-        { label: 'Framework', value: 'React + Vite', reason: 'Fast builds, hot reload, modern DX' },
-        { label: 'Routing', value: 'React Router', reason: 'SPA navigation for seamless UX' },
-        { label: 'Hosting', value: 'Netlify', reason: 'Git integration, auto-deploy on push' },
-        { label: 'Architecture', value: 'Demo Registry', reason: 'Add demos by registering in one file' }
-      ],
-      codeSnippet: {
-        title: 'Demo Registry Pattern',
-        language: 'javascript',
-        code: `// src/demos/index.js
-export const demos = {
-  'my-demo': {
-    title: 'Demo Title',
-    description: '...',
-    icon: '🎯',
-    component: MyDemoComponent
-  }
-}`
-      },
-      filesCreated: 23
-    }
-  },
-  {
-    id: 'netlify-setup',
-    phase: 'Deployment',
-    title: 'Seamless Deployment',
-    role: 'collaboration',
-    content: {
-      humanAsk: "Can I deploy this now even though we haven't built anything?",
-      aiResponse: "Absolutely. The infrastructure is a complete, working app. Deploying now verifies the pipeline works.",
-      benefit: "This approach validates the deployment process early, so we can focus on building features knowing they'll deploy automatically.",
-      steps: [
-        'Connect GitHub repo to Netlify',
-        'Build settings auto-detected from netlify.toml',
-        'Every git push triggers auto-deployment',
-        'Site live within minutes'
-      ]
-    }
-  },
-  {
-    id: 'game-request',
-    phase: 'First Demo',
-    title: 'The Challenge',
-    role: 'human',
-    content: {
-      quote: "Can you build an impressive game that will wow my students? It should have multiple levels with sufficient challenge, work on mobile phones, be intellectually engaging and at the same time just pure fun.",
-      requirements: [
-        { icon: '📱', text: 'Mobile-friendly' },
-        { icon: '🧠', text: 'Intellectually engaging' },
-        { icon: '🎮', text: 'Multiple levels' },
-        { icon: '😄', text: 'Pure fun' },
-        { icon: '🤯', text: 'Wow factor' }
-      ]
-    }
-  },
-  {
-    id: 'game-design',
-    phase: 'First Demo',
-    title: 'Designing Mind Grid',
-    role: 'ai',
-    content: {
-      concept: "A pattern memory game that evolves its rules as you progress, testing not just memory but spatial reasoning and adaptability.",
-      mechanics: [
-        { levels: '1-5', name: 'Basic', desc: 'Memorize and repeat patterns' },
-        { levels: '6-10', name: 'Reverse', desc: 'Repeat patterns backwards' },
-        { levels: '11-15', name: 'Mirror', desc: 'Flip patterns horizontally' },
-        { levels: '16-20', name: 'Rotate', desc: 'Rotate patterns 90°' },
-        { levels: '21-25', name: 'Colors', desc: 'Match position AND color' },
-        { levels: '26-30', name: 'Speed', desc: 'Lightning fast display' }
-      ],
-      whyThisDesign: "Each mechanic builds on the previous, creating a learning curve that feels achievable yet challenging. The rules change, so players can't just memorize—they must adapt."
-    }
-  },
-  {
-    id: 'game-tech',
-    phase: 'First Demo',
-    title: 'Technical Implementation',
-    role: 'ai',
-    content: {
-      highlights: [
-        {
-          title: 'Pattern Transformation',
-          desc: 'Mathematical functions to mirror, rotate, and reverse patterns on the grid',
-          code: `function transformPattern(pattern, mechanic, gridSize) {
-  switch (mechanic) {
-    case 'rotate':
-      return pattern.map(item => {
-        const row = Math.floor(item.position / gridSize)
-        const col = item.position % gridSize
-        const newRow = col
-        const newCol = gridSize - 1 - row
-        return { ...item, position: newRow * gridSize + newCol }
-      })
-    // ...
-  }
-}`
-        },
-        {
-          title: 'Particle Effects',
-          desc: 'Visual feedback with physics-based particles on every interaction',
-          code: `const addParticles = (x, y, color, count = 10) => {
-  const newParticles = Array.from({ length: count }, (_, i) => ({
-    id: Date.now() + i,
-    x, y, color,
-    angle: (Math.PI * 2 * i) / count,
-    speed: 2 + Math.random() * 3,
-    life: 1
-  }))
-  setParticles(prev => [...prev, ...newParticles])
-}`
-        }
-      ],
-      stats: { levels: '30+', linesOfCode: 450, mechanics: 6 }
-    }
-  },
-  {
-    id: 'productivity-request',
-    phase: 'Second Demo',
-    title: 'A Different Challenge',
-    role: 'human',
-    content: {
-      quote: "Can we build a productivity app for guiding CS students to develop the right habits and practices to prepare for the job market while things are changing due to AI?",
-      insight: "The professor recognized that in an AI-transformed industry, students need guidance not just on technical skills, but on how to position themselves competitively.",
-      themes: ['Career preparation', 'AI-era adaptation', 'Habit building', 'Skill development']
-    }
-  },
-  {
-    id: 'productivity-design',
-    phase: 'Second Demo',
-    title: 'Designing DevPath',
-    role: 'ai',
-    content: {
-      concept: "A comprehensive habit and skill tracker specifically designed for CS students navigating the AI-transformed job market.",
-      structure: [
-        {
-          name: 'Daily Habits',
-          icon: '✓',
-          items: ['Write Code', 'Learn Something New', 'Solve Problems', 'Build Projects', 'Network', 'Practice AI Tools', 'Reflect']
-        },
-        {
-          name: 'Skill Roadmap',
-          icon: '📈',
-          items: ['CS Fundamentals', 'AI Literacy', 'Practical Skills', 'Human Skills', 'Career Building']
-        },
-        {
-          name: 'Weekly Challenges',
-          icon: '🎯',
-          items: ['Actionable tasks', 'Point rewards', 'Rotating selection']
-        }
-      ],
-      aiEraFocus: "Specifically includes AI tool proficiency, prompt engineering, and emphasizes human skills that AI cannot replace."
-    }
-  },
-  {
-    id: 'insights',
-    phase: 'Second Demo',
-    title: 'AI-Era Guidance',
-    role: 'ai',
-    content: {
-      insights: [
-        { title: "AI Won't Replace You", text: "But someone who knows how to use AI effectively might." },
-        { title: "Fundamentals Matter More", text: "When AI writes boilerplate, understanding WHY becomes your differentiator." },
-        { title: "Human Skills Are Your Moat", text: "Communication, empathy, and creative problem-framing are skills AI struggles with." },
-        { title: "Quality Over Quantity", text: "One well-documented project beats 20 todo apps. Go deep." }
-      ],
-      whyIncluded: "These insights rotate in the app, providing continuous reinforcement of key mindset shifts students need."
-    }
-  },
-  {
-    id: 'summary',
-    phase: 'The Result',
-    title: 'What We Built Together',
-    role: 'collaboration',
-    content: {
-      timeline: [
-        { time: 'Request', item: 'Infrastructure for demos on Netlify' },
-        { time: 'Built', item: '23 files, complete React app with routing' },
-        { time: 'Request', item: 'Impressive mobile game with levels' },
-        { time: 'Built', item: 'Mind Grid: 30+ levels, 6 mechanics, particle effects' },
-        { time: 'Request', item: 'Productivity app for CS students' },
-        { time: 'Built', item: 'DevPath: habits, skills, challenges, AI-era guidance' },
-        { time: 'Request', item: 'Tell the story of this collaboration' },
-        { time: 'Built', item: "You're looking at it right now" }
-      ],
-      technologies: ['React', 'Vite', 'React Router', 'CSS Animations', 'localStorage', 'Netlify'],
-      totalCode: '2,500+ lines'
-    }
-  },
-  {
-    id: 'takeaways',
-    phase: 'Reflection',
-    title: 'Key Takeaways',
-    role: 'lesson',
-    content: {
-      points: [
-        {
-          title: 'Start with Infrastructure',
-          desc: 'A solid foundation makes everything easier. We deployed an empty shell first to validate the pipeline.'
-        },
-        {
-          title: 'Iterate Quickly',
-          desc: 'Each demo went from request to deployed in a single conversation. AI accelerates development cycles dramatically.'
-        },
-        {
-          title: 'Human Ideas + AI Execution',
-          desc: 'The professor provided vision and requirements. AI handled implementation details and technical decisions.'
-        },
-        {
-          title: 'This Is the Future',
-          desc: 'Understanding how to collaborate with AI—providing clear requirements, reviewing output, iterating—is the meta-skill of the AI era.'
-        }
-      ]
-    }
-  }
+
+    let i = 0
+    setDisplayed('')
+    const timer = setInterval(() => {
+      if (i < text.length) {
+        setDisplayed(text.slice(0, i + 1))
+        i++
+      } else {
+        clearInterval(timer)
+      }
+    }, speed)
+
+    return () => clearInterval(timer)
+  }, [text, speed, start])
+
+  return displayed
+}
+
+// Animated counter
+function AnimatedNumber({ value, duration = 1000 }) {
+  const [display, setDisplay] = useState(0)
+
+  useEffect(() => {
+    let start = 0
+    const increment = value / (duration / 16)
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= value) {
+        setDisplay(value)
+        clearInterval(timer)
+      } else {
+        setDisplay(Math.floor(start))
+      }
+    }, 16)
+    return () => clearInterval(timer)
+  }, [value, duration])
+
+  return <span>{display}</span>
+}
+
+// File tree animation component
+function FileTree({ files, animate }) {
+  return (
+    <div className={`file-tree ${animate ? 'animate' : ''}`}>
+      {files.map((file, i) => (
+        <div
+          key={file}
+          className="file-item"
+          style={{ animationDelay: `${i * 0.1}s` }}
+        >
+          <span className="file-icon">{file.includes('/') ? '📁' : '📄'}</span>
+          <span className="file-name">{file}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// Animated architecture diagram
+function ArchitectureDiagram({ animate }) {
+  return (
+    <div className={`architecture-diagram ${animate ? 'animate' : ''}`}>
+      <div className="arch-layer layer-1">
+        <div className="arch-box user">
+          <span className="arch-icon">👤</span>
+          <span>User</span>
+        </div>
+      </div>
+
+      <div className="arch-arrow arrow-1">
+        <div className="arrow-line" />
+        <div className="arrow-head">▼</div>
+      </div>
+
+      <div className="arch-layer layer-2">
+        <div className="arch-box netlify">
+          <span className="arch-icon">◈</span>
+          <span>Netlify</span>
+        </div>
+      </div>
+
+      <div className="arch-arrow arrow-2">
+        <div className="arrow-line" />
+        <div className="arrow-head">▼</div>
+      </div>
+
+      <div className="arch-layer layer-3">
+        <div className="arch-box react">
+          <span className="arch-icon">⚛</span>
+          <span>React App</span>
+        </div>
+      </div>
+
+      <div className="arch-arrow arrow-3">
+        <div className="arrow-line" />
+        <div className="arrow-head">▼</div>
+      </div>
+
+      <div className="arch-layer layer-4">
+        <div className="arch-box demo">
+          <span className="arch-icon">🎮</span>
+          <span>Demo 1</span>
+        </div>
+        <div className="arch-box demo">
+          <span className="arch-icon">📱</span>
+          <span>Demo 2</span>
+        </div>
+        <div className="arch-box demo">
+          <span className="arch-icon">📖</span>
+          <span>Demo 3</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Game mechanics visual
+function GameMechanicsVisual({ animate }) {
+  const mechanics = [
+    { name: 'Basic', icon: '▢', color: '#6366f1', transform: 'none' },
+    { name: 'Reverse', icon: '◀', color: '#f59e0b', transform: 'reverse' },
+    { name: 'Mirror', icon: '⟷', color: '#ec4899', transform: 'mirror' },
+    { name: 'Rotate', icon: '↻', color: '#22c55e', transform: 'rotate' },
+    { name: 'Colors', icon: '◉', color: '#06b6d4', transform: 'colors' },
+    { name: 'Speed', icon: '⚡', color: '#ef4444', transform: 'speed' },
+  ]
+
+  return (
+    <div className={`mechanics-visual ${animate ? 'animate' : ''}`}>
+      {mechanics.map((m, i) => (
+        <div
+          key={m.name}
+          className={`mechanic-card ${m.transform}`}
+          style={{
+            '--color': m.color,
+            animationDelay: `${i * 0.15}s`
+          }}
+        >
+          <div className="mechanic-demo">
+            <div className="mini-grid">
+              {[0,1,2,3,4,5,6,7,8].map(j => (
+                <div
+                  key={j}
+                  className={`mini-tile ${[1,4,7].includes(j) ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+            <div className="transform-arrow">→</div>
+            <div className={`mini-grid transformed ${m.transform}`}>
+              {[0,1,2,3,4,5,6,7,8].map(j => (
+                <div
+                  key={j}
+                  className={`mini-tile ${[1,4,7].includes(j) ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+          <span className="mechanic-icon" style={{ color: m.color }}>{m.icon}</span>
+          <span className="mechanic-name">{m.name}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// Skills radar chart visual
+function SkillsRadar({ animate }) {
+  const skills = [
+    { name: 'Fundamentals', angle: 0 },
+    { name: 'AI Literacy', angle: 72 },
+    { name: 'Practical', angle: 144 },
+    { name: 'Human Skills', angle: 216 },
+    { name: 'Career', angle: 288 },
+  ]
+
+  return (
+    <div className={`skills-radar ${animate ? 'animate' : ''}`}>
+      <svg viewBox="0 0 200 200">
+        {/* Background circles */}
+        {[20, 40, 60, 80].map(r => (
+          <circle
+            key={r}
+            cx="100"
+            cy="100"
+            r={r}
+            fill="none"
+            stroke="var(--border)"
+            strokeWidth="1"
+            opacity="0.3"
+          />
+        ))}
+
+        {/* Skill lines */}
+        {skills.map((skill, i) => {
+          const rad = (skill.angle - 90) * Math.PI / 180
+          const x2 = 100 + Math.cos(rad) * 85
+          const y2 = 100 + Math.sin(rad) * 85
+          return (
+            <line
+              key={i}
+              x1="100"
+              y1="100"
+              x2={x2}
+              y2={y2}
+              stroke="var(--border)"
+              strokeWidth="1"
+              opacity="0.3"
+            />
+          )
+        })}
+
+        {/* Filled area */}
+        <polygon
+          className="radar-fill"
+          points={skills.map((skill, i) => {
+            const rad = (skill.angle - 90) * Math.PI / 180
+            const r = 50 + Math.random() * 25
+            const x = 100 + Math.cos(rad) * r
+            const y = 100 + Math.sin(rad) * r
+            return `${x},${y}`
+          }).join(' ')}
+        />
+
+        {/* Labels */}
+        {skills.map((skill, i) => {
+          const rad = (skill.angle - 90) * Math.PI / 180
+          const x = 100 + Math.cos(rad) * 95
+          const y = 100 + Math.sin(rad) * 95
+          return (
+            <text
+              key={i}
+              x={x}
+              y={y}
+              className="radar-label"
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              {skill.name}
+            </text>
+          )
+        })}
+      </svg>
+    </div>
+  )
+}
+
+// Conversation bubble
+function ConversationBubble({ role, children, animate, delay = 0 }) {
+  return (
+    <div
+      className={`conversation-bubble ${role} ${animate ? 'animate' : ''}`}
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <div className="bubble-avatar">
+        {role === 'human' ? '👨‍🏫' : '🤖'}
+      </div>
+      <div className="bubble-content">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Main component
+const SLIDES = [
+  { id: 'title', type: 'title' },
+  { id: 'idea', type: 'idea' },
+  { id: 'architecture', type: 'architecture' },
+  { id: 'deploy', type: 'deploy' },
+  { id: 'game-request', type: 'game-request' },
+  { id: 'game-mechanics', type: 'game-mechanics' },
+  { id: 'game-result', type: 'game-result' },
+  { id: 'productivity-request', type: 'productivity-request' },
+  { id: 'productivity-visual', type: 'productivity-visual' },
+  { id: 'stats', type: 'stats' },
+  { id: 'takeaway', type: 'takeaway' },
 ]
 
 export default function BuildStory() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
-
-  const currentChapter = STORY_CHAPTERS[currentIndex]
-  const progress = ((currentIndex + 1) / STORY_CHAPTERS.length) * 100
+  const slideRef = useRef(null)
 
   const navigate = (direction) => {
     if (isAnimating) return
-
     const newIndex = direction === 'next'
-      ? Math.min(currentIndex + 1, STORY_CHAPTERS.length - 1)
-      : Math.max(currentIndex - 1, 0)
+      ? Math.min(currentSlide + 1, SLIDES.length - 1)
+      : Math.max(currentSlide - 1, 0)
 
-    if (newIndex !== currentIndex) {
+    if (newIndex !== currentSlide) {
       setIsAnimating(true)
-      setCurrentIndex(newIndex)
-      setTimeout(() => setIsAnimating(false), 500)
+      setCurrentSlide(newIndex)
+      setTimeout(() => setIsAnimating(false), 800)
     }
   }
 
@@ -267,293 +316,364 @@ export default function BuildStory() {
         navigate('prev')
       }
     }
+
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentIndex, isAnimating])
+  }, [currentSlide, isAnimating])
 
-  const renderContent = () => {
-    const { content, role } = currentChapter
-
-    if (currentChapter.id === 'intro') {
-      return (
-        <div className="slide-intro">
-          <div className="quote-block">
-            <span className="quote-mark">"</span>
-            <p>{content.quote}</p>
-          </div>
-          <p className="insight">{content.insight}</p>
-          <div className={`visual-icon ${content.visual}`}>💡</div>
-        </div>
-      )
+  // Touch handling
+  const touchStart = useRef(null)
+  const handleTouchStart = (e) => {
+    touchStart.current = e.touches[0].clientX
+  }
+  const handleTouchEnd = (e) => {
+    if (!touchStart.current) return
+    const diff = touchStart.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 50) {
+      navigate(diff > 0 ? 'next' : 'prev')
     }
+    touchStart.current = null
+  }
 
-    if (currentChapter.id === 'infrastructure') {
-      return (
-        <div className="slide-infrastructure">
-          <p className="decision">{content.decision}</p>
-          <div className="approach-grid">
-            {content.approach.map((item, i) => (
-              <div key={i} className="approach-card">
-                <span className="approach-label">{item.label}</span>
-                <span className="approach-value">{item.value}</span>
-                <span className="approach-reason">{item.reason}</span>
+  const progress = ((currentSlide + 1) / SLIDES.length) * 100
+  const slide = SLIDES[currentSlide]
+
+  const renderSlide = () => {
+    const animate = !isAnimating
+
+    switch (slide.type) {
+      case 'title':
+        return (
+          <div className="slide-title-screen">
+            <div className="title-visual">
+              <div className="collab-icons">
+                <span className="icon-human">👨‍🏫</span>
+                <span className="icon-plus">+</span>
+                <span className="icon-ai">🤖</span>
               </div>
-            ))}
-          </div>
-          <div className="code-block">
-            <div className="code-header">{content.codeSnippet.title}</div>
-            <pre><code>{content.codeSnippet.code}</code></pre>
-          </div>
-          <div className="stat-badge">{content.filesCreated} files created</div>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'netlify-setup') {
-      return (
-        <div className="slide-netlify">
-          <div className="conversation">
-            <div className="message human">
-              <span className="msg-role">Professor</span>
-              <p>{content.humanAsk}</p>
-            </div>
-            <div className="message ai">
-              <span className="msg-role">Claude</span>
-              <p>{content.aiResponse}</p>
-            </div>
-          </div>
-          <p className="benefit">{content.benefit}</p>
-          <div className="steps">
-            {content.steps.map((step, i) => (
-              <div key={i} className="step">
-                <span className="step-num">{i + 1}</span>
-                <span>{step}</span>
+              <div className="title-equals">=</div>
+              <div className="title-result">
+                <span>✨</span>
               </div>
-            ))}
-          </div>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'game-request') {
-      return (
-        <div className="slide-request">
-          <div className="quote-block">
-            <span className="quote-mark">"</span>
-            <p>{content.quote}</p>
-          </div>
-          <div className="requirements">
-            {content.requirements.map((req, i) => (
-              <div key={i} className="requirement">
-                <span className="req-icon">{req.icon}</span>
-                <span>{req.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'game-design') {
-      return (
-        <div className="slide-game-design">
-          <p className="concept">{content.concept}</p>
-          <div className="mechanics-table">
-            {content.mechanics.map((m, i) => (
-              <div key={i} className="mechanic-row">
-                <span className="levels">Levels {m.levels}</span>
-                <span className="mech-name">{m.name}</span>
-                <span className="mech-desc">{m.desc}</span>
-              </div>
-            ))}
-          </div>
-          <p className="why-design">{content.whyThisDesign}</p>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'game-tech') {
-      return (
-        <div className="slide-tech">
-          {content.highlights.map((h, i) => (
-            <div key={i} className="tech-highlight">
-              <h4>{h.title}</h4>
-              <p>{h.desc}</p>
-              <pre><code>{h.code}</code></pre>
             </div>
-          ))}
-          <div className="tech-stats">
-            <div className="tech-stat">
-              <span className="ts-value">{content.stats.levels}</span>
-              <span className="ts-label">Levels</span>
-            </div>
-            <div className="tech-stat">
-              <span className="ts-value">{content.stats.linesOfCode}</span>
-              <span className="ts-label">Lines of Code</span>
-            </div>
-            <div className="tech-stat">
-              <span className="ts-value">{content.stats.mechanics}</span>
-              <span className="ts-label">Mechanics</span>
+            <h1>Human + AI Collaboration</h1>
+            <p className="subtitle">The story of how this was built</p>
+            <div className="start-hint">
+              <span className="arrow-bounce">→</span>
+              Press arrow keys or swipe to begin
             </div>
           </div>
-        </div>
-      )
-    }
+        )
 
-    if (currentChapter.id === 'productivity-request') {
-      return (
-        <div className="slide-request">
-          <div className="quote-block">
-            <span className="quote-mark">"</span>
-            <p>{content.quote}</p>
-          </div>
-          <p className="insight">{content.insight}</p>
-          <div className="themes">
-            {content.themes.map((theme, i) => (
-              <span key={i} className="theme-tag">{theme}</span>
-            ))}
-          </div>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'productivity-design') {
-      return (
-        <div className="slide-devpath-design">
-          <p className="concept">{content.concept}</p>
-          <div className="structure-cards">
-            {content.structure.map((s, i) => (
-              <div key={i} className="structure-card">
-                <div className="sc-header">
-                  <span className="sc-icon">{s.icon}</span>
-                  <span className="sc-name">{s.name}</span>
+      case 'idea':
+        return (
+          <div className="slide-idea">
+            <div className="idea-visual">
+              <div className="thought-bubble">
+                <span className="thought-icon">💭</span>
+                <div className="thought-content">
+                  <span>📱</span>
+                  <span>🎮</span>
+                  <span>🚀</span>
                 </div>
-                <ul>
-                  {s.items.map((item, j) => (
-                    <li key={j}>{item}</li>
-                  ))}
-                </ul>
               </div>
-            ))}
+              <div className="person-icon">👨‍🏫</div>
+            </div>
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"I want to demonstrate AI capabilities to my students..."</p>
+            </ConversationBubble>
+            <div className="idea-tags">
+              <span className="tag">Interactive demos</span>
+              <span className="tag">Mobile-friendly</span>
+              <span className="tag">Deploy on Netlify</span>
+            </div>
           </div>
-          <p className="ai-focus">{content.aiEraFocus}</p>
-        </div>
-      )
-    }
+        )
 
-    if (currentChapter.id === 'insights') {
-      return (
-        <div className="slide-insights">
-          <div className="insights-grid">
-            {content.insights.map((ins, i) => (
-              <div key={i} className="insight-card">
-                <h4>{ins.title}</h4>
-                <p>{ins.text}</p>
+      case 'architecture':
+        return (
+          <div className="slide-architecture">
+            <h2>Building the Foundation</h2>
+            <ArchitectureDiagram animate={animate} />
+            <div className="tech-badges">
+              <span className="tech-badge">React</span>
+              <span className="tech-badge">Vite</span>
+              <span className="tech-badge">Router</span>
+              <span className="tech-badge">Netlify</span>
+            </div>
+          </div>
+        )
+
+      case 'deploy':
+        return (
+          <div className="slide-deploy">
+            <h2>Deploy First, Build Later</h2>
+            <div className="deploy-visual">
+              <div className="deploy-step step-1">
+                <div className="step-icon">📁</div>
+                <div className="step-label">Empty Shell</div>
               </div>
-            ))}
-          </div>
-          <p className="why-included">{content.whyIncluded}</p>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'summary') {
-      return (
-        <div className="slide-summary">
-          <div className="timeline">
-            {content.timeline.map((item, i) => (
-              <div key={i} className={`timeline-item ${item.time.toLowerCase()}`}>
-                <span className="tl-marker">{item.time === 'Request' ? '💬' : '✨'}</span>
-                <span className="tl-text">{item.item}</span>
+              <div className="deploy-arrow">→</div>
+              <div className="deploy-step step-2">
+                <div className="step-icon">☁️</div>
+                <div className="step-label">Deploy</div>
               </div>
-            ))}
-          </div>
-          <div className="tech-used">
-            {content.technologies.map((tech, i) => (
-              <span key={i} className="tech-badge">{tech}</span>
-            ))}
-          </div>
-          <div className="total-code">{content.totalCode} of code written</div>
-        </div>
-      )
-    }
-
-    if (currentChapter.id === 'takeaways') {
-      return (
-        <div className="slide-takeaways">
-          {content.points.map((point, i) => (
-            <div key={i} className="takeaway">
-              <div className="takeaway-num">{i + 1}</div>
-              <div className="takeaway-content">
-                <h4>{point.title}</h4>
-                <p>{point.desc}</p>
+              <div className="deploy-arrow">→</div>
+              <div className="deploy-step step-3">
+                <div className="step-icon">✅</div>
+                <div className="step-label">Verified!</div>
               </div>
             </div>
-          ))}
-        </div>
-      )
-    }
+            <p className="deploy-insight">Validate the pipeline before building features</p>
+          </div>
+        )
 
-    return null
+      case 'game-request':
+        return (
+          <div className="slide-game-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build an impressive game that will WOW my students!"</p>
+            </ConversationBubble>
+            <div className="requirements-visual">
+              <div className="req-item"><span>🧠</span>Intellectual</div>
+              <div className="req-item"><span>📱</span>Mobile</div>
+              <div className="req-item"><span>🎮</span>Multiple Levels</div>
+              <div className="req-item"><span>🤩</span>Wow Factor</div>
+              <div className="req-item"><span>😄</span>Pure Fun</div>
+            </div>
+          </div>
+        )
+
+      case 'game-mechanics':
+        return (
+          <div className="slide-game-mechanics">
+            <h2>Mind Grid: 6 Evolving Mechanics</h2>
+            <GameMechanicsVisual animate={animate} />
+            <p className="mechanics-insight">Same game, new rules every 5 levels</p>
+          </div>
+        )
+
+      case 'game-result':
+        return (
+          <div className="slide-game-result">
+            <div className="result-showcase">
+              <div className="mock-game">
+                <div className="mock-header">
+                  <span>Level 12</span>
+                  <span>Score: 2,450</span>
+                </div>
+                <div className="mock-grid">
+                  {[...Array(16)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`mock-tile ${[2,5,9,14].includes(i) ? 'lit' : ''}`}
+                    />
+                  ))}
+                </div>
+                <div className="mock-hint">Mirror the pattern!</div>
+              </div>
+            </div>
+            <div className="result-stats">
+              <div className="stat-item">
+                <span className="stat-num"><AnimatedNumber value={30} /></span>
+                <span className="stat-label">Levels</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-num"><AnimatedNumber value={6} /></span>
+                <span className="stat-label">Mechanics</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-num"><AnimatedNumber value={450} /></span>
+                <span className="stat-label">Lines of Code</span>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'productivity-request':
+        return (
+          <div className="slide-productivity-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build a productivity app for CS students preparing for the AI-era job market"</p>
+            </ConversationBubble>
+            <div className="context-visual">
+              <div className="context-item old">
+                <span>📚</span>
+                <span>Old Way</span>
+              </div>
+              <div className="context-arrow">→</div>
+              <div className="context-item new">
+                <span>🤖</span>
+                <span>AI Era</span>
+              </div>
+            </div>
+            <p className="context-question">How do students stay competitive?</p>
+          </div>
+        )
+
+      case 'productivity-visual':
+        return (
+          <div className="slide-productivity-visual">
+            <h2>DevPath: Career-Ready Habits</h2>
+            <div className="devpath-showcase">
+              <div className="showcase-section">
+                <h3>Daily Habits</h3>
+                <div className="habit-list">
+                  {['💻 Code', '📚 Learn', '🧩 Solve', '🔨 Build', '🤝 Connect', '🤖 AI Tools'].map((h, i) => (
+                    <div key={i} className="habit-item" style={{ animationDelay: `${i * 0.1}s` }}>
+                      {h}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="showcase-section">
+                <h3>Skill Roadmap</h3>
+                <SkillsRadar animate={animate} />
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'stats':
+        return (
+          <div className="slide-stats">
+            <h2>What We Built Together</h2>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-icon">📁</div>
+                <div className="stat-value"><AnimatedNumber value={23} /></div>
+                <div className="stat-desc">Files Created</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon">💻</div>
+                <div className="stat-value"><AnimatedNumber value={2500} /></div>
+                <div className="stat-desc">Lines of Code</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon">🎯</div>
+                <div className="stat-value"><AnimatedNumber value={3} /></div>
+                <div className="stat-desc">Complete Apps</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon">⏱️</div>
+                <div className="stat-value">1</div>
+                <div className="stat-desc">Conversation</div>
+              </div>
+            </div>
+            <div className="timeline-mini">
+              <div className="tl-item">💬 Idea</div>
+              <div className="tl-arrow">→</div>
+              <div className="tl-item">🏗️ Infrastructure</div>
+              <div className="tl-arrow">→</div>
+              <div className="tl-item">🎮 Game</div>
+              <div className="tl-arrow">→</div>
+              <div className="tl-item">📱 App</div>
+              <div className="tl-arrow">→</div>
+              <div className="tl-item">📖 Story</div>
+            </div>
+          </div>
+        )
+
+      case 'takeaway':
+        return (
+          <div className="slide-takeaway">
+            <div className="takeaway-visual">
+              <div className="takeaway-equation">
+                <div className="eq-part">
+                  <span className="eq-icon">💡</span>
+                  <span>Your Ideas</span>
+                </div>
+                <span className="eq-plus">+</span>
+                <div className="eq-part">
+                  <span className="eq-icon">🤖</span>
+                  <span>AI Execution</span>
+                </div>
+                <span className="eq-equals">=</span>
+                <div className="eq-part result">
+                  <span className="eq-icon">🚀</span>
+                  <span>10x Output</span>
+                </div>
+              </div>
+            </div>
+            <div className="key-lessons">
+              <div className="lesson">
+                <span className="lesson-num">1</span>
+                <span>Clear requirements → Better results</span>
+              </div>
+              <div className="lesson">
+                <span className="lesson-num">2</span>
+                <span>Iterate fast, deploy often</span>
+              </div>
+              <div className="lesson">
+                <span className="lesson-num">3</span>
+                <span>Human creativity + AI capability</span>
+              </div>
+            </div>
+            <p className="final-message">This is how you work with AI.</p>
+          </div>
+        )
+
+      default:
+        return null
+    }
   }
 
   return (
-    <div className="build-story">
+    <div
+      className="build-story"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Progress bar */}
       <div className="story-progress">
         <div className="progress-fill" style={{ width: `${progress}%` }} />
       </div>
 
-      {/* Chapter indicator */}
-      <div className="chapter-indicator">
-        <span className="chapter-phase">{currentChapter.phase}</span>
-        <span className="chapter-count">{currentIndex + 1} / {STORY_CHAPTERS.length}</span>
+      {/* Slide counter */}
+      <div className="slide-counter">
+        {currentSlide + 1} / {SLIDES.length}
       </div>
 
-      {/* Main slide area */}
-      <div className={`slide ${currentChapter.role} ${isAnimating ? 'animating' : ''}`}>
-        <h2 className="slide-title">{currentChapter.title}</h2>
-        <div className="slide-content">
-          {renderContent()}
-        </div>
+      {/* Main slide */}
+      <div
+        ref={slideRef}
+        className={`slide-container ${isAnimating ? 'animating' : ''}`}
+        key={currentSlide}
+      >
+        {renderSlide()}
       </div>
 
       {/* Navigation */}
       <div className="story-nav">
         <button
-          className="nav-btn prev"
+          className="nav-btn"
           onClick={() => navigate('prev')}
-          disabled={currentIndex === 0}
+          disabled={currentSlide === 0}
         >
-          ← Previous
+          ←
         </button>
         <div className="nav-dots">
-          {STORY_CHAPTERS.map((_, i) => (
+          {SLIDES.map((_, i) => (
             <button
               key={i}
-              className={`nav-dot ${i === currentIndex ? 'active' : ''} ${i < currentIndex ? 'visited' : ''}`}
+              className={`nav-dot ${i === currentSlide ? 'active' : ''}`}
               onClick={() => {
-                if (!isAnimating) {
+                if (!isAnimating && i !== currentSlide) {
                   setIsAnimating(true)
-                  setCurrentIndex(i)
-                  setTimeout(() => setIsAnimating(false), 500)
+                  setCurrentSlide(i)
+                  setTimeout(() => setIsAnimating(false), 800)
                 }
               }}
             />
           ))}
         </div>
         <button
-          className="nav-btn next"
+          className="nav-btn"
           onClick={() => navigate('next')}
-          disabled={currentIndex === STORY_CHAPTERS.length - 1}
+          disabled={currentSlide === SLIDES.length - 1}
         >
-          Next →
+          →
         </button>
-      </div>
-
-      {/* Keyboard hint */}
-      <div className="keyboard-hint">
-        Use ← → arrow keys or swipe to navigate
       </div>
     </div>
   )
