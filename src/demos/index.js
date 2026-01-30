@@ -18,16 +18,15 @@
  */
 
 // Import demo components here
-// import ExampleDemo from './example/ExampleDemo'
+import MindGrid from './mind-grid/MindGrid'
 
 // Register all demos here
 export const demos = {
-  // Example entry (uncomment and modify when adding demos):
-  // 'example': {
-  //   title: 'Example Demo',
-  //   description: 'This is an example demo showing the structure',
-  //   icon: '📋',
-  //   tags: ['example', 'template'],
-  //   component: ExampleDemo
-  // },
+  'mind-grid': {
+    title: 'Mind Grid',
+    description: 'A pattern memory game with evolving mechanics. Test your spatial reasoning through 30+ levels of increasing challenge.',
+    icon: '🧠',
+    tags: ['game', 'puzzle', 'memory', 'mobile-friendly'],
+    component: MindGrid
+  },
 }
