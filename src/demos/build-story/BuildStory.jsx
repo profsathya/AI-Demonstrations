@@ -286,6 +286,8 @@ const SLIDES = [
   { id: 'productivity-visual', type: 'productivity-visual' },
   { id: 'security-request', type: 'security-request' },
   { id: 'security-visual', type: 'security-visual' },
+  { id: 'abstraction-request', type: 'abstraction-request' },
+  { id: 'abstraction-visual', type: 'abstraction-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -592,6 +594,64 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'abstraction-request':
+        return (
+          <div className="slide-abstraction-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Create an app that walks students through the idea of abstractions using simple examples"</p>
+            </ConversationBubble>
+            <div className="abstraction-concept">
+              <div className="layers-preview">
+                <div className="preview-layer" style={{ '--layer-color': '#8b5cf6' }}>High Level</div>
+                <div className="preview-layer" style={{ '--layer-color': '#06b6d4' }}>Middle</div>
+                <div className="preview-layer" style={{ '--layer-color': '#22c55e' }}>Low Level</div>
+                <div className="preview-layer" style={{ '--layer-color': '#f59e0b' }}>Hardware</div>
+              </div>
+              <div className="concept-text">Each layer hides complexity</div>
+            </div>
+            <div className="abstraction-domains">
+              <span>💻 Code</span>
+              <span>🖥️ Interfaces</span>
+              <span>🌌 Physics</span>
+              <span>🚗 Transport</span>
+              <span>💳 Money</span>
+            </div>
+          </div>
+        )
+
+      case 'abstraction-visual':
+        return (
+          <div className="slide-abstraction-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~10 min to build</span>
+            </div>
+            <h2>Abstraction Explorer</h2>
+            <div className="abstraction-demo">
+              <div className="demo-domains">
+                {[
+                  { icon: '💻', name: 'Programming', layers: 6 },
+                  { icon: '🖥️', name: 'Interfaces', layers: 5 },
+                  { icon: '🌌', name: 'Physics', layers: 6 },
+                  { icon: '🚗', name: 'Transport', layers: 5 },
+                  { icon: '💳', name: 'Money', layers: 5 },
+                  { icon: '💬', name: 'Communication', layers: 5 },
+                ].map((d, i) => (
+                  <div key={i} className="demo-domain" style={{ animationDelay: `${i * 0.1}s` }}>
+                    <span className="domain-icon">{d.icon}</span>
+                    <span className="domain-name">{d.name}</span>
+                    <span className="domain-layers">{d.layers} layers</span>
+                  </div>
+                ))}
+              </div>
+              <div className="demo-feature">
+                <span className="feature-icon">💡</span>
+                <span>Interactive "Aha!" moments in each domain</span>
+              </div>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -599,49 +659,54 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={25} /></div>
+                <div className="stat-value"><AnimatedNumber value={27} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={3200} /></div>
+                <div className="stat-value"><AnimatedNumber value={3800} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={4} /></div>
+                <div className="stat-value"><AnimatedNumber value={5} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~35</div>
+                <div className="stat-value">~45</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
             <div className="time-breakdown">
               <div className="time-item">
                 <span className="time-label">🏗️ Infrastructure</span>
-                <div className="time-bar" style={{ '--width': '14%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">5m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🎮 Mind Grid</span>
-                <div className="time-bar" style={{ '--width': '29%' }}></div>
+                <div className="time-bar" style={{ '--width': '22%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📱 DevPath</span>
-                <div className="time-bar" style={{ '--width': '23%' }}></div>
+                <div className="time-bar" style={{ '--width': '18%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🛡️ SecureScan</span>
-                <div className="time-bar" style={{ '--width': '20%' }}></div>
+                <div className="time-bar" style={{ '--width': '16%' }}></div>
                 <span className="time-min">7m</span>
               </div>
               <div className="time-item">
+                <span className="time-label">🧅 Abstraction</span>
+                <div className="time-bar" style={{ '--width': '22%' }}></div>
+                <span className="time-min">10m</span>
+              </div>
+              <div className="time-item">
                 <span className="time-label">📖 This Story</span>
-                <div className="time-bar" style={{ '--width': '14%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">5m</span>
               </div>
             </div>

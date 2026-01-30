@@ -22,6 +22,7 @@ import MindGrid from './mind-grid/MindGrid'
 import DevPath from './dev-path/DevPath'
 import BuildStory from './build-story/BuildStory'
 import SecureScan from './secure-scan/SecureScan'
+import AbstractionExplorer from './abstraction-explorer/AbstractionExplorer'
 
 // Register all demos here
 export const demos = {
@@ -52,5 +53,12 @@ export const demos = {
     icon: '🛡️',
     tags: ['security', 'analysis', 'web', 'educational'],
     component: SecureScan
+  },
+  'abstraction-explorer': {
+    title: 'Abstraction Explorer',
+    description: 'Discover how layers of abstraction work across programming, physics, money, and more. Interactive exploration with aha moments.',
+    icon: '🧅',
+    tags: ['education', 'concepts', 'interactive', 'mobile-friendly'],
+    component: AbstractionExplorer
   },
 }
