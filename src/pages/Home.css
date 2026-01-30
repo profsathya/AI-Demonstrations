@@ -1,0 +1,66 @@
+.hero {
+  text-align: center;
+  padding: 3rem 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.demos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+}
+
+.empty-state h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.empty-state code {
+  font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .demos-grid {
+    grid-template-columns: 1fr;
+  }
+}

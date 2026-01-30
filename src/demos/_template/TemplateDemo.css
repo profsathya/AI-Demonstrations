@@ -1,0 +1,110 @@
+/* Demo Template Styles */
+
+.template-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.demo-section {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.demo-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.demo-section p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.demo-interactive {
+  background: var(--background);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.demo-code-example pre {
+  margin: 0;
+  background: var(--background);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.demo-code-example code {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Common demo UI elements */
+.demo-button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.demo-button:hover {
+  background: var(--primary-dark);
+}
+
+.demo-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.demo-input {
+  width: 100%;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.demo-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.demo-input::placeholder {
+  color: var(--text-muted);
+}
+
+.demo-textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.demo-output {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 100px;
+}
+
+.demo-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
