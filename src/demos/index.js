@@ -21,6 +21,7 @@
 import MindGrid from './mind-grid/MindGrid'
 import DevPath from './dev-path/DevPath'
 import BuildStory from './build-story/BuildStory'
+import SecureScan from './secure-scan/SecureScan'
 
 // Register all demos here
 export const demos = {
@@ -44,5 +45,12 @@ export const demos = {
     icon: '🚀',
     tags: ['productivity', 'career', 'habits', 'mobile-friendly'],
     component: DevPath
+  },
+  'secure-scan': {
+    title: 'SecureScan',
+    description: 'Analyze website security headers and configuration. Get a security score and actionable recommendations.',
+    icon: '🛡️',
+    tags: ['security', 'analysis', 'web', 'educational'],
+    component: SecureScan
   },
 }

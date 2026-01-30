@@ -908,6 +908,123 @@
   color: var(--primary);
 }
 
+/* ========== SECURITY SLIDES ========== */
+.slide-security-request {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.security-goals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.goal-item {
+  background: var(--surface);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  animation: reqPop 0.4s ease backwards;
+}
+
+.goal-item:nth-child(1) { animation-delay: 0.3s; }
+.goal-item:nth-child(2) { animation-delay: 0.4s; }
+.goal-item:nth-child(3) { animation-delay: 0.5s; }
+.goal-item:nth-child(4) { animation-delay: 0.6s; }
+
+.goal-item span:first-child {
+  font-size: 1.5rem;
+}
+
+.security-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.slide-security-visual {
+  text-align: center;
+  width: 100%;
+}
+
+.slide-security-visual h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.security-demo {
+  margin-bottom: 1.5rem;
+}
+
+.mock-scanner {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 280px;
+  margin: 0 auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: showcaseIn 0.6s ease;
+}
+
+.mock-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mock-score .grade {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #84cc16;
+  line-height: 1;
+}
+
+.mock-score .score-num {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mock-checks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.mock-check {
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.mock-check.pass {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.mock-check.fail {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.security-features {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 /* ========== TAKEAWAY SLIDE ========== */
 .slide-takeaway {
   display: flex;

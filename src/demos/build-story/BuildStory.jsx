@@ -284,6 +284,8 @@ const SLIDES = [
   { id: 'game-result', type: 'game-result' },
   { id: 'productivity-request', type: 'productivity-request' },
   { id: 'productivity-visual', type: 'productivity-visual' },
+  { id: 'security-request', type: 'security-request' },
+  { id: 'security-visual', type: 'security-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -534,6 +536,50 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'security-request':
+        return (
+          <div className="slide-security-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build an app that scans websites for security vulnerabilities and shows a dashboard"</p>
+            </ConversationBubble>
+            <div className="security-goals">
+              <div className="goal-item"><span>🔒</span>HTTPS Check</div>
+              <div className="goal-item"><span>📋</span>Security Headers</div>
+              <div className="goal-item"><span>📊</span>Score Dashboard</div>
+              <div className="goal-item"><span>💡</span>Recommendations</div>
+            </div>
+            <p className="security-note">Passive analysis only - no attacks</p>
+          </div>
+        )
+
+      case 'security-visual':
+        return (
+          <div className="slide-security-visual">
+            <h2>SecureScan Dashboard</h2>
+            <div className="security-demo">
+              <div className="mock-scanner">
+                <div className="mock-score">
+                  <span className="grade">B</span>
+                  <span className="score-num">78</span>
+                </div>
+                <div className="mock-checks">
+                  <div className="mock-check pass">✓ HTTPS</div>
+                  <div className="mock-check pass">✓ HSTS</div>
+                  <div className="mock-check fail">✗ CSP</div>
+                  <div className="mock-check pass">✓ X-Frame</div>
+                </div>
+              </div>
+            </div>
+            <div className="security-features">
+              <span>10 Security Checks</span>
+              <span>•</span>
+              <span>Letter Grade</span>
+              <span>•</span>
+              <span>Fix Recommendations</span>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -541,17 +587,17 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={23} /></div>
+                <div className="stat-value"><AnimatedNumber value={25} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={2500} /></div>
+                <div className="stat-value"><AnimatedNumber value={3200} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={3} /></div>
+                <div className="stat-value"><AnimatedNumber value={4} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card">
@@ -561,13 +607,13 @@ export default function BuildStory() {
               </div>
             </div>
             <div className="timeline-mini">
-              <div className="tl-item">💬 Idea</div>
-              <div className="tl-arrow">→</div>
-              <div className="tl-item">🏗️ Infrastructure</div>
+              <div className="tl-item">🏗️ Infra</div>
               <div className="tl-arrow">→</div>
               <div className="tl-item">🎮 Game</div>
               <div className="tl-arrow">→</div>
-              <div className="tl-item">📱 App</div>
+              <div className="tl-item">📱 DevPath</div>
+              <div className="tl-arrow">→</div>
+              <div className="tl-item">🛡️ Scanner</div>
               <div className="tl-arrow">→</div>
               <div className="tl-item">📖 Story</div>
             </div>
