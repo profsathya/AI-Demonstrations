@@ -24,6 +24,7 @@ import BuildStory from './build-story/BuildStory'
 import SecureScan from './secure-scan/SecureScan'
 import AbstractionExplorer from './abstraction-explorer/AbstractionExplorer'
 import Blackjack from './blackjack/Blackjack'
+import IkigaiExplorer from './ikigai-explorer/IkigaiExplorer'
 
 // Register all demos here
 export const demos = {
@@ -68,5 +69,12 @@ export const demos = {
     icon: '🃏',
     tags: ['game', 'cards', 'casino', 'mobile-friendly'],
     component: Blackjack
+  },
+  'ikigai-explorer': {
+    title: 'Ikigai Explorer',
+    description: 'Discover your reason for being through guided self-reflection. Explore what you love, what you\'re good at, what the world needs, and what you can be paid for.',
+    icon: '🔮',
+    tags: ['self-discovery', 'education', 'interactive', 'mobile-friendly'],
+    component: IkigaiExplorer
   },
 }

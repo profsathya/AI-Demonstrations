@@ -954,6 +954,7 @@
 .time-item:nth-child(5) { animation-delay: 0.5s; }
 .time-item:nth-child(6) { animation-delay: 0.6s; }
 .time-item:nth-child(7) { animation-delay: 0.7s; }
+.time-item:nth-child(8) { animation-delay: 0.8s; }
 
 @keyframes timeSlide {
   from {
@@ -1406,6 +1407,158 @@
   flex-wrap: wrap;
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+/* ========== IKIGAI SLIDES ========== */
+.slide-ikigai-request {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.ikigai-concept {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ikigai-circles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 140px;
+}
+
+.ikigai-circle {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  animation: ikigaiPop 0.5s ease backwards;
+}
+
+.ikigai-circle.love {
+  background: rgba(236, 72, 153, 0.2);
+  border: 2px solid #ec4899;
+  animation-delay: 0.1s;
+}
+
+.ikigai-circle.good {
+  background: rgba(245, 158, 11, 0.2);
+  border: 2px solid #f59e0b;
+  animation-delay: 0.2s;
+}
+
+.ikigai-circle.needs {
+  background: rgba(34, 197, 94, 0.2);
+  border: 2px solid #22c55e;
+  animation-delay: 0.3s;
+}
+
+.ikigai-circle.paid {
+  background: rgba(99, 102, 241, 0.2);
+  border: 2px solid #6366f1;
+  animation-delay: 0.4s;
+}
+
+@keyframes ikigaiPop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.ikigai-meaning {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.ikigai-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.ik-feature {
+  background: var(--surface);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  animation: reqPop 0.4s ease backwards;
+}
+
+.ik-feature:nth-child(1) { animation-delay: 0.5s; }
+.ik-feature:nth-child(2) { animation-delay: 0.6s; }
+.ik-feature:nth-child(3) { animation-delay: 0.7s; }
+
+.ik-feature span:first-child {
+  font-size: 1.25rem;
+}
+
+.slide-ikigai-visual {
+  text-align: center;
+  width: 100%;
+}
+
+.slide-ikigai-visual h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ikigai-demo {
+  margin-bottom: 1.5rem;
+}
+
+.demo-quadrants {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.demo-quadrant {
+  background: var(--surface);
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  border-left: 4px solid var(--color);
+  animation: quadIn 0.4s ease backwards;
+}
+
+@keyframes quadIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.demo-quadrant .quad-icon {
+  font-size: 1.5rem;
+}
+
+.demo-quadrant .quad-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.demo-quadrant .quad-levels {
+  font-size: 0.65rem;
+  color: var(--color);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
 }
 
 /* ========== TAKEAWAY SLIDE ========== */

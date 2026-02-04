@@ -290,6 +290,8 @@ const SLIDES = [
   { id: 'abstraction-visual', type: 'abstraction-visual' },
   { id: 'blackjack-request', type: 'blackjack-request' },
   { id: 'blackjack-visual', type: 'blackjack-visual' },
+  { id: 'ikigai-request', type: 'ikigai-request' },
+  { id: 'ikigai-visual', type: 'ikigai-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -698,6 +700,60 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'ikigai-request':
+        return (
+          <div className="slide-ikigai-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build an interactive activity that guides students to explore their own ikigai with 5+ levels of deep thinking"</p>
+            </ConversationBubble>
+            <div className="ikigai-concept">
+              <div className="ikigai-circles">
+                <div className="ikigai-circle love">❤️</div>
+                <div className="ikigai-circle good">⭐</div>
+                <div className="ikigai-circle needs">🌍</div>
+                <div className="ikigai-circle paid">💰</div>
+              </div>
+              <div className="ikigai-meaning">生き甲斐 — "A reason for being"</div>
+            </div>
+            <div className="ikigai-features">
+              <div className="ik-feature"><span>🎯</span>Choice-based exploration</div>
+              <div className="ik-feature"><span>🔄</span>6 levels per quadrant</div>
+              <div className="ik-feature"><span>✨</span>Discover intersections</div>
+            </div>
+          </div>
+        )
+
+      case 'ikigai-visual':
+        return (
+          <div className="slide-ikigai-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~10 min to build</span>
+            </div>
+            <h2>Ikigai Explorer</h2>
+            <div className="ikigai-demo">
+              <div className="demo-quadrants">
+                {[
+                  { icon: '❤️', name: 'What You Love', color: '#ec4899' },
+                  { icon: '⭐', name: 'What You\'re Good At', color: '#f59e0b' },
+                  { icon: '🌍', name: 'What World Needs', color: '#22c55e' },
+                  { icon: '💰', name: 'What You Can Be Paid For', color: '#6366f1' },
+                ].map((q, i) => (
+                  <div key={i} className="demo-quadrant" style={{ '--color': q.color, animationDelay: `${i * 0.15}s` }}>
+                    <span className="quad-icon">{q.icon}</span>
+                    <span className="quad-name">{q.name}</span>
+                    <span className="quad-levels">6 levels</span>
+                  </div>
+                ))}
+              </div>
+              <div className="demo-feature">
+                <span className="feature-icon">🔮</span>
+                <span>24 guided questions → Personal ikigai statement</span>
+              </div>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -705,59 +761,64 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={29} /></div>
+                <div className="stat-value"><AnimatedNumber value={31} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={4400} /></div>
+                <div className="stat-value"><AnimatedNumber value={5200} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={6} /></div>
+                <div className="stat-value"><AnimatedNumber value={7} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~53</div>
+                <div className="stat-value">~63</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
             <div className="time-breakdown">
               <div className="time-item">
                 <span className="time-label">🏗️ Infrastructure</span>
-                <div className="time-bar" style={{ '--width': '9%' }}></div>
+                <div className="time-bar" style={{ '--width': '8%' }}></div>
                 <span className="time-min">5m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🎮 Mind Grid</span>
-                <div className="time-bar" style={{ '--width': '19%' }}></div>
+                <div className="time-bar" style={{ '--width': '16%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📱 DevPath</span>
-                <div className="time-bar" style={{ '--width': '15%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🛡️ SecureScan</span>
-                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">7m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🧅 Abstraction</span>
-                <div className="time-bar" style={{ '--width': '19%' }}></div>
+                <div className="time-bar" style={{ '--width': '16%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🃏 Blackjack</span>
-                <div className="time-bar" style={{ '--width': '15%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
+                <span className="time-label">🔮 Ikigai</span>
+                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <span className="time-min">10m</span>
+              </div>
+              <div className="time-item">
                 <span className="time-label">📖 This Story</span>
-                <div className="time-bar" style={{ '--width': '9%' }}></div>
+                <div className="time-bar" style={{ '--width': '8%' }}></div>
                 <span className="time-min">5m</span>
               </div>
             </div>
