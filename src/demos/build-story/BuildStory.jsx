@@ -292,6 +292,8 @@ const SLIDES = [
   { id: 'blackjack-visual', type: 'blackjack-visual' },
   { id: 'ikigai-request', type: 'ikigai-request' },
   { id: 'ikigai-visual', type: 'ikigai-visual' },
+  { id: 'chess-request', type: 'chess-request' },
+  { id: 'chess-visual', type: 'chess-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -754,6 +756,60 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'chess-request':
+        return (
+          <div className="slide-chess-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build a chess game"</p>
+            </ConversationBubble>
+            <div className="chess-features">
+              <div className="chess-feature"><span>♟️</span>All piece movements</div>
+              <div className="chess-feature"><span>🏰</span>Castling</div>
+              <div className="chess-feature"><span>⚔️</span>En passant</div>
+              <div className="chess-feature"><span>👑</span>Pawn promotion</div>
+              <div className="chess-feature"><span>⚠️</span>Check detection</div>
+              <div className="chess-feature"><span>🏆</span>Checkmate/Stalemate</div>
+            </div>
+          </div>
+        )
+
+      case 'chess-visual':
+        return (
+          <div className="slide-chess-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~12 min to build</span>
+            </div>
+            <h2>Chess</h2>
+            <div className="chess-demo">
+              <div className="demo-board">
+                {[
+                  ['♜','♞','♝','♛','♚','♝','♞','♜'],
+                  ['♟','♟','♟','♟','♟','♟','♟','♟'],
+                  [' ',' ',' ',' ',' ',' ',' ',' '],
+                  [' ',' ',' ',' ',' ',' ',' ',' '],
+                  [' ',' ',' ',' ','♙',' ',' ',' '],
+                  [' ',' ',' ',' ',' ',' ',' ',' '],
+                  ['♙','♙','♙','♙',' ','♙','♙','♙'],
+                  ['♖','♘','♗','♕','♔','♗','♘','♖'],
+                ].slice(0, 4).map((row, r) => (
+                  <div key={r} className="demo-board-row">
+                    {row.slice(0, 8).map((piece, c) => (
+                      <div key={c} className={`demo-square ${(r + c) % 2 === 0 ? 'light' : 'dark'}`}>
+                        {piece !== ' ' && <span className="demo-piece">{piece}</span>}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <div className="demo-feature">
+                <span className="feature-icon">♚</span>
+                <span>Full rules • Legal move highlighting • Move history</span>
+              </div>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -761,64 +817,69 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={31} /></div>
+                <div className="stat-value"><AnimatedNumber value={35} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={5200} /></div>
+                <div className="stat-value"><AnimatedNumber value={5900} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={7} /></div>
+                <div className="stat-value"><AnimatedNumber value={8} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~63</div>
+                <div className="stat-value">~75</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
             <div className="time-breakdown">
               <div className="time-item">
                 <span className="time-label">🏗️ Infrastructure</span>
-                <div className="time-bar" style={{ '--width': '8%' }}></div>
+                <div className="time-bar" style={{ '--width': '7%' }}></div>
                 <span className="time-min">5m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🎮 Mind Grid</span>
-                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📱 DevPath</span>
-                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🛡️ SecureScan</span>
-                <div className="time-bar" style={{ '--width': '11%' }}></div>
+                <div className="time-bar" style={{ '--width': '9%' }}></div>
                 <span className="time-min">7m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🧅 Abstraction</span>
-                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🃏 Blackjack</span>
-                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🔮 Ikigai</span>
-                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
+                <span className="time-label">♟️ Chess</span>
+                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <span className="time-min">12m</span>
+              </div>
+              <div className="time-item">
                 <span className="time-label">📖 This Story</span>
-                <div className="time-bar" style={{ '--width': '8%' }}></div>
+                <div className="time-bar" style={{ '--width': '7%' }}></div>
                 <span className="time-min">5m</span>
               </div>
             </div>

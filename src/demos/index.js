@@ -25,6 +25,7 @@ import SecureScan from './secure-scan/SecureScan'
 import AbstractionExplorer from './abstraction-explorer/AbstractionExplorer'
 import Blackjack from './blackjack/Blackjack'
 import IkigaiExplorer from './ikigai-explorer/IkigaiExplorer'
+import Chess from './chess/Chess'
 
 // Register all demos here
 export const demos = {
@@ -76,5 +77,12 @@ export const demos = {
     icon: '🔮',
     tags: ['self-discovery', 'education', 'interactive', 'mobile-friendly'],
     component: IkigaiExplorer
+  },
+  'chess': {
+    title: 'Chess',
+    description: 'Full chess game with all rules: castling, en passant, promotion, check/checkmate detection. Play against a friend!',
+    icon: '♟️',
+    tags: ['game', 'strategy', 'classic', 'mobile-friendly'],
+    component: Chess
   },
 }

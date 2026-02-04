@@ -955,6 +955,7 @@
 .time-item:nth-child(6) { animation-delay: 0.6s; }
 .time-item:nth-child(7) { animation-delay: 0.7s; }
 .time-item:nth-child(8) { animation-delay: 0.8s; }
+.time-item:nth-child(9) { animation-delay: 0.9s; }
 
 @keyframes timeSlide {
   from {
@@ -1559,6 +1560,93 @@
   background: rgba(0, 0, 0, 0.05);
   padding: 0.15rem 0.5rem;
   border-radius: 10px;
+}
+
+/* ========== CHESS SLIDES ========== */
+.slide-chess-request {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.chess-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  max-width: 400px;
+}
+
+.chess-feature {
+  background: var(--surface);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  animation: reqPop 0.4s ease backwards;
+}
+
+.chess-feature:nth-child(1) { animation-delay: 0.2s; }
+.chess-feature:nth-child(2) { animation-delay: 0.3s; }
+.chess-feature:nth-child(3) { animation-delay: 0.4s; }
+.chess-feature:nth-child(4) { animation-delay: 0.5s; }
+.chess-feature:nth-child(5) { animation-delay: 0.6s; }
+.chess-feature:nth-child(6) { animation-delay: 0.7s; }
+
+.chess-feature span:first-child {
+  font-size: 1.25rem;
+}
+
+.slide-chess-visual {
+  text-align: center;
+  width: 100%;
+}
+
+.slide-chess-visual h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chess-demo {
+  margin-bottom: 1.5rem;
+}
+
+.demo-board {
+  display: inline-flex;
+  flex-direction: column;
+  border: 3px solid #4a3728;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  animation: showcaseIn 0.6s ease;
+}
+
+.demo-board-row {
+  display: flex;
+}
+
+.demo-square {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-square.light {
+  background: #f0d9b5;
+}
+
+.demo-square.dark {
+  background: #b58863;
+}
+
+.demo-piece {
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 /* ========== TAKEAWAY SLIDE ========== */
