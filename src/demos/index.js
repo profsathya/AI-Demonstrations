@@ -23,6 +23,7 @@ import DevPath from './dev-path/DevPath'
 import BuildStory from './build-story/BuildStory'
 import SecureScan from './secure-scan/SecureScan'
 import AbstractionExplorer from './abstraction-explorer/AbstractionExplorer'
+import Blackjack from './blackjack/Blackjack'
 
 // Register all demos here
 export const demos = {
@@ -60,5 +61,12 @@ export const demos = {
     icon: '🧅',
     tags: ['education', 'concepts', 'interactive', 'mobile-friendly'],
     component: AbstractionExplorer
+  },
+  'blackjack': {
+    title: 'Blackjack',
+    description: 'Classic casino card game with betting, hit/stand/double mechanics, and animated card dealing.',
+    icon: '🃏',
+    tags: ['game', 'cards', 'casino', 'mobile-friendly'],
+    component: Blackjack
   },
 }

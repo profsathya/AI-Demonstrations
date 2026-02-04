@@ -288,6 +288,8 @@ const SLIDES = [
   { id: 'security-visual', type: 'security-visual' },
   { id: 'abstraction-request', type: 'abstraction-request' },
   { id: 'abstraction-visual', type: 'abstraction-visual' },
+  { id: 'blackjack-request', type: 'blackjack-request' },
+  { id: 'blackjack-visual', type: 'blackjack-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -652,6 +654,50 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'blackjack-request':
+        return (
+          <div className="slide-blackjack-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build a Blackjack game app"</p>
+            </ConversationBubble>
+            <div className="blackjack-features">
+              <div className="bj-feature"><span>🃏</span>Card Dealing</div>
+              <div className="bj-feature"><span>💰</span>Chip Betting</div>
+              <div className="bj-feature"><span>✋</span>Hit / Stand</div>
+              <div className="bj-feature"><span>✖️2</span>Double Down</div>
+            </div>
+          </div>
+        )
+
+      case 'blackjack-visual':
+        return (
+          <div className="slide-blackjack-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~8 min to build</span>
+            </div>
+            <h2>Blackjack</h2>
+            <div className="blackjack-demo">
+              <div className="demo-table">
+                <div className="demo-cards dealer">
+                  <span className="card-demo back"></span>
+                  <span className="card-demo">K♠</span>
+                </div>
+                <div className="demo-vs">VS</div>
+                <div className="demo-cards player">
+                  <span className="card-demo">A♥</span>
+                  <span className="card-demo">J♦</span>
+                </div>
+              </div>
+              <div className="demo-chips">
+                {['$5', '$10', '$25', '$50'].map((c, i) => (
+                  <span key={i} className="demo-chip" style={{ animationDelay: `${i * 0.1}s` }}>{c}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -659,54 +705,59 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={27} /></div>
+                <div className="stat-value"><AnimatedNumber value={29} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={3800} /></div>
+                <div className="stat-value"><AnimatedNumber value={4400} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={5} /></div>
+                <div className="stat-value"><AnimatedNumber value={6} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~45</div>
+                <div className="stat-value">~53</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
             <div className="time-breakdown">
               <div className="time-item">
                 <span className="time-label">🏗️ Infrastructure</span>
-                <div className="time-bar" style={{ '--width': '11%' }}></div>
+                <div className="time-bar" style={{ '--width': '9%' }}></div>
                 <span className="time-min">5m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🎮 Mind Grid</span>
-                <div className="time-bar" style={{ '--width': '22%' }}></div>
+                <div className="time-bar" style={{ '--width': '19%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📱 DevPath</span>
-                <div className="time-bar" style={{ '--width': '18%' }}></div>
+                <div className="time-bar" style={{ '--width': '15%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🛡️ SecureScan</span>
-                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">7m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🧅 Abstraction</span>
-                <div className="time-bar" style={{ '--width': '22%' }}></div>
+                <div className="time-bar" style={{ '--width': '19%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
+                <span className="time-label">🃏 Blackjack</span>
+                <div className="time-bar" style={{ '--width': '15%' }}></div>
+                <span className="time-min">8m</span>
+              </div>
+              <div className="time-item">
                 <span className="time-label">📖 This Story</span>
-                <div className="time-bar" style={{ '--width': '11%' }}></div>
+                <div className="time-bar" style={{ '--width': '9%' }}></div>
                 <span className="time-min">5m</span>
               </div>
             </div>
