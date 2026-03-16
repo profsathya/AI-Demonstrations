@@ -26,6 +26,7 @@ import AbstractionExplorer from './abstraction-explorer/AbstractionExplorer'
 import Blackjack from './blackjack/Blackjack'
 import IkigaiExplorer from './ikigai-explorer/IkigaiExplorer'
 import Chess from './chess/Chess'
+import BigOExplorer from './bigo-explorer/BigOExplorer'
 
 // Register all demos here
 export const demos = {
@@ -84,5 +85,12 @@ export const demos = {
     icon: '♟️',
     tags: ['game', 'strategy', 'classic', 'mobile-friendly'],
     component: Chess
+  },
+  'bigo-explorer': {
+    title: 'Big O Explorer',
+    description: 'Master time complexity through real-world scenarios. Choose social media, gaming, music, or food delivery — learn O(1) through O(2^n) with retrieval practice and adaptive quizzes.',
+    icon: '📊',
+    tags: ['education', 'CS', 'algorithms', 'interactive', 'mobile-friendly'],
+    component: BigOExplorer
   },
 }

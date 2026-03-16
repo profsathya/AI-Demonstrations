@@ -294,6 +294,8 @@ const SLIDES = [
   { id: 'ikigai-visual', type: 'ikigai-visual' },
   { id: 'chess-request', type: 'chess-request' },
   { id: 'chess-visual', type: 'chess-visual' },
+  { id: 'bigo-request', type: 'bigo-request' },
+  { id: 'bigo-visual', type: 'bigo-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -810,6 +812,57 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'bigo-request':
+        return (
+          <div className="slide-bigo-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build an interactive study tool for teaching Big O notation with real-world scenarios, retrieval practice, and adaptive difficulty"</p>
+            </ConversationBubble>
+            <div className="bigo-features">
+              <div className="bigo-feat"><span>📱</span>4 real-world scenarios</div>
+              <div className="bigo-feat"><span>🧠</span>Retrieval practice</div>
+              <div className="bigo-feat"><span>🔄</span>Spaced interleaving</div>
+              <div className="bigo-feat"><span>📈</span>Adaptive difficulty</div>
+              <div className="bigo-feat"><span>👁️</span>Algorithm visualizations</div>
+            </div>
+          </div>
+        )
+
+      case 'bigo-visual':
+        return (
+          <div className="slide-bigo-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~12 min to build</span>
+            </div>
+            <h2>Big O Explorer</h2>
+            <div className="bigo-demo">
+              <div className="bigo-scenarios">
+                {['📱 Social', '🎮 Gaming', '🎵 Music', '🍕 Food'].map((s, i) => (
+                  <span key={i} className="bigo-scenario-tag" style={{ animationDelay: `${i * 0.1}s` }}>{s}</span>
+                ))}
+              </div>
+              <div className="bigo-complexities">
+                {[
+                  { n: 'O(1)', c: '#22c55e', e: '⚡' },
+                  { n: 'O(log n)', c: '#3b82f6', e: '🔍' },
+                  { n: 'O(n)', c: '#f59e0b', e: '📏' },
+                  { n: 'O(n²)', c: '#ef4444', e: '💥' },
+                  { n: 'O(2ⁿ)', c: '#dc2626', e: '🔥' },
+                ].map((c, i) => (
+                  <div key={i} className="bigo-complexity" style={{ '--color': c.c, animationDelay: `${i * 0.1 + 0.4}s` }}>
+                    <span>{c.e}</span> <span>{c.n}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="demo-feature">
+                <span className="feature-icon">📊</span>
+                <span>6 complexities • 4 quiz types • Mastery tracking</span>
+              </div>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -817,22 +870,22 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={35} /></div>
+                <div className="stat-value"><AnimatedNumber value={37} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={5900} /></div>
+                <div className="stat-value"><AnimatedNumber value={6800} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={8} /></div>
+                <div className="stat-value"><AnimatedNumber value={9} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~75</div>
+                <div className="stat-value">~87</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
@@ -874,7 +927,12 @@ export default function BuildStory() {
               </div>
               <div className="time-item">
                 <span className="time-label">♟️ Chess</span>
-                <div className="time-bar" style={{ '--width': '16%' }}></div>
+                <div className="time-bar" style={{ '--width': '14%' }}></div>
+                <span className="time-min">12m</span>
+              </div>
+              <div className="time-item">
+                <span className="time-label">📊 Big O</span>
+                <div className="time-bar" style={{ '--width': '14%' }}></div>
                 <span className="time-min">12m</span>
               </div>
               <div className="time-item">
