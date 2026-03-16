@@ -27,6 +27,7 @@ import Blackjack from './blackjack/Blackjack'
 import IkigaiExplorer from './ikigai-explorer/IkigaiExplorer'
 import Chess from './chess/Chess'
 import BigOExplorer from './bigo-explorer/BigOExplorer'
+import ThaiCooking from './thai-cooking/ThaiCooking'
 
 // Register all demos here
 export const demos = {
@@ -92,5 +93,12 @@ export const demos = {
     icon: '📊',
     tags: ['education', 'CS', 'algorithms', 'interactive', 'mobile-friendly'],
     component: BigOExplorer
+  },
+  'thai-cooking': {
+    title: 'Thai Cooking Mastery',
+    description: 'Master Thai cuisine through interactive scenarios. Choose street food, curries, soups, or everyday Thai — learn flavor balance, aromatics, and wok skills with retrieval practice and adaptive quizzes.',
+    icon: '🍜',
+    tags: ['education', 'cooking', 'interactive', 'mobile-friendly'],
+    component: ThaiCooking
   },
 }

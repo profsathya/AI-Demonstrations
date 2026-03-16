@@ -296,6 +296,8 @@ const SLIDES = [
   { id: 'chess-visual', type: 'chess-visual' },
   { id: 'bigo-request', type: 'bigo-request' },
   { id: 'bigo-visual', type: 'bigo-visual' },
+  { id: 'thai-request', type: 'thai-request' },
+  { id: 'thai-visual', type: 'thai-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -863,6 +865,57 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'thai-request':
+        return (
+          <div className="slide-thai-request">
+            <ConversationBubble role="human" animate={animate}>
+              <p className="quote">"Build an interactive study tool for teaching Thai cooking with real-world scenarios, retrieval practice, and adaptive difficulty"</p>
+            </ConversationBubble>
+            <div className="thai-features">
+              <div className="thai-feat"><span>🍜</span>4 cooking paths</div>
+              <div className="thai-feat"><span>🌶️</span>Flavor balance</div>
+              <div className="thai-feat"><span>🧠</span>Retrieval practice</div>
+              <div className="thai-feat"><span>📈</span>Adaptive difficulty</div>
+              <div className="thai-feat"><span>⭐</span>Mastery tracking</div>
+            </div>
+          </div>
+        )
+
+      case 'thai-visual':
+        return (
+          <div className="slide-thai-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~12 min to build</span>
+            </div>
+            <h2>Thai Cooking Mastery</h2>
+            <div className="thai-demo">
+              <div className="thai-paths">
+                {['🍢 Street Food', '🍛 Curry', '🍜 Soups', '🥘 Everyday'].map((s, i) => (
+                  <span key={i} className="thai-path-tag" style={{ animationDelay: `${i * 0.1}s` }}>{s}</span>
+                ))}
+              </div>
+              <div className="thai-concepts">
+                {[
+                  { n: '5 Flavors', c: '#ef4444', e: '🌶️' },
+                  { n: 'Aromatics', c: '#22c55e', e: '🌿' },
+                  { n: 'Curry Paste', c: '#f59e0b', e: '🫕' },
+                  { n: 'Wok Skills', c: '#6366f1', e: '🔥' },
+                  { n: 'Rice & Noodles', c: '#06b6d4', e: '🍚' },
+                ].map((c, i) => (
+                  <div key={i} className="thai-concept-tag" style={{ '--color': c.c, animationDelay: `${i * 0.1 + 0.4}s` }}>
+                    <span>{c.e}</span> <span>{c.n}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="demo-feature">
+                <span className="feature-icon">🍜</span>
+                <span>6 concepts • 4 quiz types • Flavor wheel visualization</span>
+              </div>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -870,74 +923,79 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={37} /></div>
+                <div className="stat-value"><AnimatedNumber value={39} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={6800} /></div>
+                <div className="stat-value"><AnimatedNumber value={7800} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={9} /></div>
+                <div className="stat-value"><AnimatedNumber value={10} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~87</div>
+                <div className="stat-value">~99</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
             <div className="time-breakdown">
               <div className="time-item">
                 <span className="time-label">🏗️ Infrastructure</span>
-                <div className="time-bar" style={{ '--width': '7%' }}></div>
+                <div className="time-bar" style={{ '--width': '6%' }}></div>
                 <span className="time-min">5m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🎮 Mind Grid</span>
-                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📱 DevPath</span>
-                <div className="time-bar" style={{ '--width': '11%' }}></div>
+                <div className="time-bar" style={{ '--width': '9%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🛡️ SecureScan</span>
-                <div className="time-bar" style={{ '--width': '9%' }}></div>
+                <div className="time-bar" style={{ '--width': '8%' }}></div>
                 <span className="time-min">7m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🧅 Abstraction</span>
-                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🃏 Blackjack</span>
-                <div className="time-bar" style={{ '--width': '11%' }}></div>
+                <div className="time-bar" style={{ '--width': '9%' }}></div>
                 <span className="time-min">8m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">🔮 Ikigai</span>
-                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <div className="time-bar" style={{ '--width': '11%' }}></div>
                 <span className="time-min">10m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">♟️ Chess</span>
-                <div className="time-bar" style={{ '--width': '14%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">12m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📊 Big O</span>
-                <div className="time-bar" style={{ '--width': '14%' }}></div>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
+                <span className="time-min">12m</span>
+              </div>
+              <div className="time-item">
+                <span className="time-label">🍜 Thai Cooking</span>
+                <div className="time-bar" style={{ '--width': '13%' }}></div>
                 <span className="time-min">12m</span>
               </div>
               <div className="time-item">
                 <span className="time-label">📖 This Story</span>
-                <div className="time-bar" style={{ '--width': '7%' }}></div>
+                <div className="time-bar" style={{ '--width': '6%' }}></div>
                 <span className="time-min">5m</span>
               </div>
             </div>
