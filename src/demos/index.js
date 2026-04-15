@@ -28,6 +28,16 @@ import IkigaiExplorer from './ikigai-explorer/IkigaiExplorer'
 import Chess from './chess/Chess'
 import BigOExplorer from './bigo-explorer/BigOExplorer'
 import ThaiCooking from './thai-cooking/ThaiCooking'
+import NavAssist from './nav-assist/NavAssist'
+import PassVault from './pass-vault/PassVault'
+import VisionAI from './vision-ai/VisionAI'
+import InvasiveWatch from './invasive-watch/InvasiveWatch'
+import NativePlants from './native-plants/NativePlants'
+import MindfulU from './mindful-u/MindfulU'
+import CampusHub from './campus-hub/CampusHub'
+import TeamChat from './team-chat/TeamChat'
+import TransitFlow from './transit-flow/TransitFlow'
+import TAConnect from './ta-connect/TAConnect'
 
 // Register all demos here
 export const demos = {
@@ -100,5 +110,75 @@ export const demos = {
     icon: '🍜',
     tags: ['education', 'cooking', 'interactive', 'mobile-friendly'],
     component: ThaiCooking
+  },
+  'nav-assist': {
+    title: 'NavAssist',
+    description: 'Wearable navigation for visually impaired. Simulates obstacle detection, haptic feedback, and voice guidance for independent navigation.',
+    icon: '👁️',
+    tags: ['accessibility', 'hardware', 'navigation', 'mobile-friendly'],
+    component: NavAssist
+  },
+  'pass-vault': {
+    title: 'PassVault',
+    description: 'Password manager for students and faculty. Secure credential storage with categories, password generator, and strength analysis.',
+    icon: '🔐',
+    tags: ['security', 'productivity', 'education', 'mobile-friendly'],
+    component: PassVault
+  },
+  'vision-ai': {
+    title: 'VisionAI',
+    description: 'Image recognition software demo. Upload images to see simulated ML object detection, scene classification, and color analysis.',
+    icon: '👀',
+    tags: ['AI', 'ML', 'computer-vision', 'mobile-friendly'],
+    component: VisionAI
+  },
+  'invasive-watch': {
+    title: 'InvasiveWatch',
+    description: 'Invasive species tracker for citizen science. Identify, report, and track invasive species sightings in your area.',
+    icon: '🌿',
+    tags: ['environment', 'citizen-science', 'education', 'mobile-friendly'],
+    component: InvasiveWatch
+  },
+  'native-plants': {
+    title: 'NativePlants',
+    description: 'Native plant reporter and identification guide. Explore local flora, log sightings, and learn about wildlife-friendly gardening.',
+    icon: '🌻',
+    tags: ['environment', 'nature', 'education', 'mobile-friendly'],
+    component: NativePlants
+  },
+  'mindful-u': {
+    title: 'MindfulU',
+    description: 'Mental wellness tracker for students. Daily mood check-ins, breathing exercises, insights, and campus support resources.',
+    icon: '🧘',
+    tags: ['wellness', 'mental-health', 'student-life', 'mobile-friendly'],
+    component: MindfulU
+  },
+  'campus-hub': {
+    title: 'CampusHub',
+    description: 'Central directory for campus and local resources. Find academic support, health services, financial aid, and events in one place.',
+    icon: '🏛️',
+    tags: ['campus', 'resources', 'directory', 'mobile-friendly'],
+    component: CampusHub
+  },
+  'team-chat': {
+    title: 'TeamChat',
+    description: 'Simple team messaging app. Channels, direct messages, reactions, and real-time communication for smaller teams.',
+    icon: '💬',
+    tags: ['communication', 'productivity', 'collaboration', 'mobile-friendly'],
+    component: TeamChat
+  },
+  'transit-flow': {
+    title: 'TransitFlow',
+    description: 'Better public transit app with real-time arrivals, crowding indicators, trip planning, and service alerts.',
+    icon: '🚇',
+    tags: ['transit', 'navigation', 'city', 'mobile-friendly'],
+    component: TransitFlow
+  },
+  'ta-connect': {
+    title: 'TAConnect',
+    description: 'TA office hour directory and queue system. Find TAs, see availability, join virtual queues, and get help faster.',
+    icon: '👨‍🏫',
+    tags: ['education', 'campus', 'student-life', 'mobile-friendly'],
+    component: TAConnect
   },
 }

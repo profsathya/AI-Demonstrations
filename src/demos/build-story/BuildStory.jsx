@@ -298,6 +298,8 @@ const SLIDES = [
   { id: 'bigo-visual', type: 'bigo-visual' },
   { id: 'thai-request', type: 'thai-request' },
   { id: 'thai-visual', type: 'thai-visual' },
+  { id: 'hackathon-request', type: 'hackathon-request' },
+  { id: 'hackathon-visual', type: 'hackathon-visual' },
   { id: 'stats', type: 'stats' },
   { id: 'takeaway', type: 'takeaway' },
 ]
@@ -916,6 +918,57 @@ export default function BuildStory() {
           </div>
         )
 
+      case 'hackathon-request':
+        return (
+          <div className="conversation-bubble human animate">
+            <div className="bubble-avatar">👨‍💻</div>
+            <div className="bubble-content">
+              <p className="quote">
+                "Build MVPs for 10 hackathon project ideas. Include About pages explaining design choices.
+                Simulate hardware where needed. Don't wait for input — make it impressive!"
+              </p>
+            </div>
+          </div>
+        )
+
+      case 'hackathon-visual':
+        return (
+          <div className="slide-hackathon-visual">
+            <div className="time-badge">
+              <span className="time-icon">⏱️</span>
+              <span>~80 min for 10 apps</span>
+            </div>
+            <h2>Hackathon Showcase</h2>
+            <div className="hackathon-grid">
+              {[
+                { icon: '👁️', name: 'NavAssist', desc: 'Wearable navigation' },
+                { icon: '🔐', name: 'PassVault', desc: 'Password manager' },
+                { icon: '👀', name: 'VisionAI', desc: 'Image recognition' },
+                { icon: '🌿', name: 'InvasiveWatch', desc: 'Species tracker' },
+                { icon: '🌻', name: 'NativePlants', desc: 'Plant identifier' },
+                { icon: '🧘', name: 'MindfulU', desc: 'Wellness tracker' },
+                { icon: '🏛️', name: 'CampusHub', desc: 'Resource directory' },
+                { icon: '💬', name: 'TeamChat', desc: 'Team messaging' },
+                { icon: '🚇', name: 'TransitFlow', desc: 'Transit app' },
+                { icon: '👨‍🏫', name: 'TAConnect', desc: 'TA office hours' },
+              ].map((app, i) => (
+                <div key={i} className="hackathon-app" style={{ animationDelay: `${i * 0.08}s` }}>
+                  <span className="app-icon">{app.icon}</span>
+                  <span className="app-name">{app.name}</span>
+                  <span className="app-desc">{app.desc}</span>
+                </div>
+              ))}
+            </div>
+            <div className="hackathon-features">
+              <span>🎨 Simulated Hardware</span>
+              <span>•</span>
+              <span>📱 Mobile-First</span>
+              <span>•</span>
+              <span>ℹ️ About Pages</span>
+            </div>
+          </div>
+        )
+
       case 'stats':
         return (
           <div className="slide-stats">
@@ -923,22 +976,22 @@ export default function BuildStory() {
             <div className="stats-grid">
               <div className="stat-card">
                 <div className="stat-icon">📁</div>
-                <div className="stat-value"><AnimatedNumber value={39} /></div>
+                <div className="stat-value"><AnimatedNumber value={59} /></div>
                 <div className="stat-desc">Files Created</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">💻</div>
-                <div className="stat-value"><AnimatedNumber value={7800} /></div>
+                <div className="stat-value"><AnimatedNumber value={15000} /></div>
                 <div className="stat-desc">Lines of Code</div>
               </div>
               <div className="stat-card">
                 <div className="stat-icon">🎯</div>
-                <div className="stat-value"><AnimatedNumber value={10} /></div>
+                <div className="stat-value"><AnimatedNumber value={20} /></div>
                 <div className="stat-desc">Complete Apps</div>
               </div>
               <div className="stat-card highlight">
                 <div className="stat-icon">⏱️</div>
-                <div className="stat-value">~99</div>
+                <div className="stat-value">~179</div>
                 <div className="stat-desc">Minutes Total</div>
               </div>
             </div>
@@ -995,8 +1048,13 @@ export default function BuildStory() {
               </div>
               <div className="time-item">
                 <span className="time-label">📖 This Story</span>
-                <div className="time-bar" style={{ '--width': '6%' }}></div>
+                <div className="time-bar" style={{ '--width': '3%' }}></div>
                 <span className="time-min">5m</span>
+              </div>
+              <div className="time-item hackathon-highlight">
+                <span className="time-label">🎯 Hackathon (10 apps)</span>
+                <div className="time-bar" style={{ '--width': '45%' }}></div>
+                <span className="time-min">80m</span>
               </div>
             </div>
           </div>

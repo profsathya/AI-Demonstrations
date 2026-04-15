@@ -1,0 +1,621 @@
+.native-plants {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header */
+.np-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.np-header h1 {
+  flex: 1;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.home-header {
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #22c55e, #84cc16);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tagline {
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.back-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Home Content */
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(132, 204, 22, 0.1));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 16px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.welcome-card h3 {
+  margin: 0 0 0.5rem;
+  color: #22c55e;
+}
+
+.welcome-card p {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.quick-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #22c55e, #84cc16);
+  color: white;
+}
+
+.action-btn.secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+/* Featured Plants */
+.featured-plants h3 {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.featured-scroll {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.featured-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.featured-card:hover {
+  transform: scale(1.05);
+}
+
+.featured-image {
+  font-size: 2.5rem;
+}
+
+.featured-name {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Home Nav */
+.home-nav {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.home-nav button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.home-nav button:hover {
+  border-color: #22c55e;
+}
+
+/* Explore View */
+.explore-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.plant-search {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.filter-btn.active {
+  background: #22c55e;
+  color: white;
+  border-color: #22c55e;
+}
+
+.plants-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.plant-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  background: var(--surface);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.plant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.plant-image {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.plant-name {
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.plant-type {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+/* Detail View */
+.detail-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.plant-hero {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border-radius: 16px;
+}
+
+.hero-image {
+  font-size: 4rem;
+}
+
+.hero-info h2 {
+  margin: 0 0 0.25rem;
+}
+
+.scientific {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.plant-badges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.badge.type {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.badge.region {
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--primary);
+}
+
+.plant-quick-facts {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.fact {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.detail-section {
+  background: var(--surface);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.detail-section h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.detail-section p {
+  line-height: 1.6;
+}
+
+.wildlife-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.wildlife-tag {
+  padding: 0.35rem 0.75rem;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 15px;
+  font-size: 0.85rem;
+}
+
+.tips-list {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.tips-list li {
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+.community-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.sightings-count {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.sightings-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.log-sighting-btn {
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #22c55e, #84cc16);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+/* Report Form */
+.report-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.gps-btn {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px dashed var(--border);
+  background: transparent;
+  color: #22c55e;
+  cursor: pointer;
+}
+
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.photo-upload span:first-child {
+  font-size: 2rem;
+}
+
+.submit-btn {
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #22c55e, #84cc16);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+/* Journal View */
+.journal-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.journal-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  background: linear-gradient(135deg, #22c55e, #84cc16);
+  border-radius: 12px;
+  color: white;
+}
+
+.j-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.j-stat-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.j-stat-label {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.journal-entries {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.empty-journal {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+}
+
+.empty-journal span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.journal-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.entry-image {
+  font-size: 2rem;
+}
+
+.entry-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.entry-name {
+  font-weight: 600;
+}
+
+.entry-location {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.entry-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.entry-notes {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text);
+  margin-top: 0.35rem;
+}
+
+.entry-photo {
+  font-size: 1.25rem;
+}
+
+/* About */
+.about-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.about-section {
+  background: var(--surface);
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.about-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: #22c55e;
+}
+
+.about-section p {
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.about-section ul {
+  padding-left: 1.25rem;
+}
+
+.about-section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.about-section li strong {
+  color: var(--text);
+}
