@@ -1,0 +1,522 @@
+.solitaire {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #1a472a, #2d5a3f);
+  border-radius: 16px;
+}
+
+.sol-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.sol-header h1 {
+  font-size: 1.25rem;
+  color: #ffd700;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.header-left {
+  min-width: 80px;
+}
+
+.moves-counter {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.35rem 0.75rem;
+  border-radius: 15px;
+}
+
+.header-right {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.back-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  cursor: pointer;
+}
+
+/* Strategy Tips */
+.strategy-tip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  margin: 0 0.5rem 0.5rem;
+  animation: tipSlide 0.4s ease;
+}
+
+@keyframes tipSlide {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tip-icon {
+  font-size: 1.25rem;
+}
+
+.tip-text {
+  flex: 1;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+}
+
+.hint-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  margin: 0 0.5rem 0.5rem;
+  font-size: 0.85rem;
+  color: white;
+  animation: hintPulse 1s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Game Area */
+.game-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.stock-waste {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stock-pile,
+.waste-pile {
+  width: 60px;
+  height: 84px;
+  position: relative;
+}
+
+.stock-pile {
+  cursor: pointer;
+}
+
+.foundations {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.foundation-pile {
+  width: 60px;
+  height: 84px;
+  position: relative;
+}
+
+.foundation-pile.droppable {
+  animation: dropGlow 1s ease-in-out infinite;
+}
+
+@keyframes dropGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+}
+
+/* Cards */
+.card {
+  width: 60px;
+  height: 84px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  user-select: none;
+}
+
+.card.face-up {
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card.face-up:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.card.face-down {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  border: 2px solid #60a5fa;
+  cursor: default;
+}
+
+.card.red {
+  color: #dc2626;
+}
+
+.card.black {
+  color: #1f2937;
+}
+
+.card.selected {
+  transform: translateY(-5px);
+  box-shadow: 0 0 0 3px #ffd700, 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card.hinted {
+  animation: hintGlow 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes hintGlow {
+  from { box-shadow: 0 0 5px #22c55e; }
+  to { box-shadow: 0 0 20px #22c55e; }
+}
+
+.card-rank {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.card-suit {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.card-back {
+  font-size: 2.5rem;
+  color: white;
+  opacity: 0.6;
+}
+
+/* Empty Piles */
+.empty-pile {
+  width: 60px;
+  height: 84px;
+  border-radius: 6px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.5rem;
+}
+
+.empty-pile.refresh {
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.empty-pile.refresh:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.foundation-empty {
+  font-size: 2rem;
+}
+
+.foundation-empty.hearts,
+.foundation-empty.diamonds {
+  color: rgba(220, 38, 38, 0.4);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+.foundation-empty.clubs,
+.foundation-empty.spades {
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.tableau-empty {
+  color: rgba(255, 215, 0, 0.4);
+  border-color: rgba(255, 215, 0, 0.3);
+  font-weight: 700;
+}
+
+/* Tableau */
+.tableau {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex: 1;
+}
+
+.tableau-pile {
+  width: 60px;
+  min-height: 200px;
+  position: relative;
+}
+
+.tableau-pile.droppable .empty-pile {
+  border-color: rgba(255, 215, 0, 0.6);
+  animation: dropGlow 1s ease-in-out infinite;
+}
+
+/* Win Screen */
+.win-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-content {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  animation: winPop 0.5s ease;
+}
+
+@keyframes winPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.win-icon {
+  font-size: 4rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.win-content h1 {
+  font-size: 2.5rem;
+  color: #ffd700;
+  margin: 1rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.win-content p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+}
+
+.win-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.win-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.win-stat .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.win-stat .stat-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.new-game-btn {
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, #ffd700, #f59e0b);
+  color: #1a472a;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.new-game-btn:hover {
+  transform: scale(1.05);
+}
+
+/* About */
+.about-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.about-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.about-section h2 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ffd700;
+}
+
+.about-section p {
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.about-section ul {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.about-section li {
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+}
+
+.about-section li strong {
+  color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .solitaire {
+    padding: 0.25rem;
+    border-radius: 8px;
+  }
+
+  .sol-header h1 {
+    font-size: 1rem;
+  }
+
+  .card,
+  .empty-pile,
+  .stock-pile,
+  .waste-pile,
+  .foundation-pile {
+    width: 44px;
+    height: 62px;
+  }
+
+  .card-rank {
+    font-size: 0.85rem;
+  }
+
+  .card-suit {
+    font-size: 1.1rem;
+  }
+
+  .card-back {
+    font-size: 1.75rem;
+  }
+
+  .empty-pile {
+    font-size: 1.1rem;
+  }
+
+  .foundation-empty {
+    font-size: 1.5rem;
+  }
+
+  .tableau-pile .card {
+    top: auto;
+  }
+
+  .tableau-pile {
+    min-height: 160px;
+  }
+
+  .tableau {
+    gap: 0.25rem;
+  }
+
+  .foundations,
+  .stock-waste {
+    gap: 0.25rem;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .strategy-tip {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .tip-text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .card,
+  .empty-pile,
+  .stock-pile,
+  .waste-pile,
+  .foundation-pile {
+    width: 38px;
+    height: 54px;
+  }
+
+  .card-rank {
+    font-size: 0.75rem;
+  }
+
+  .card-suit {
+    font-size: 0.95rem;
+  }
+}

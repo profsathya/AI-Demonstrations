@@ -38,6 +38,7 @@ import CampusHub from './campus-hub/CampusHub'
 import TeamChat from './team-chat/TeamChat'
 import TransitFlow from './transit-flow/TransitFlow'
 import TAConnect from './ta-connect/TAConnect'
+import Solitaire from './solitaire/Solitaire'
 
 // Register all demos here
 export const demos = {
@@ -180,5 +181,12 @@ export const demos = {
     icon: '👨‍🏫',
     tags: ['education', 'campus', 'student-life', 'mobile-friendly'],
     component: TAConnect
+  },
+  'solitaire': {
+    title: 'Solitaire',
+    description: 'Classic Klondike solitaire with guaranteed winnable deals, hint system, unlimited undo, and strategy tips to improve your game.',
+    icon: '🃏',
+    tags: ['game', 'cards', 'strategy', 'learning', 'mobile-friendly'],
+    component: Solitaire
   },
 }
