@@ -356,7 +356,7 @@ export default function Solitaire() {
         className={`card ${card.faceUp ? 'face-up' : 'face-down'} ${isRed(card.suit) ? 'red' : 'black'} ${isSelected ? 'selected' : ''} ${isHinted ? 'hinted' : ''}`}
         onClick={() => card.faceUp && handleCardClick(source)}
         onDoubleClick={() => card.faceUp && handleDoubleClick(source)}
-        style={source.type === 'tableau' ? { top: `${index * 25}px` } : {}}
+        style={source.type === 'tableau' ? { '--index': index, zIndex: index } : {}}
       >
         {card.faceUp ? (
           <>
