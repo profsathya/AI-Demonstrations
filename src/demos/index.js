@@ -39,6 +39,7 @@ import TeamChat from './team-chat/TeamChat'
 import TransitFlow from './transit-flow/TransitFlow'
 import TAConnect from './ta-connect/TAConnect'
 import Solitaire from './solitaire/Solitaire'
+import Tetris from './tetris/Tetris'
 
 // Register all demos here
 export const demos = {
@@ -188,5 +189,12 @@ export const demos = {
     icon: '🃏',
     tags: ['game', 'cards', 'strategy', 'learning', 'mobile-friendly'],
     component: Solitaire
+  },
+  'tetris': {
+    title: 'Tetris',
+    description: 'Classic block-stacking puzzle game with ghost pieces, hold system, next queue, 15 speed levels, and touch controls for mobile.',
+    icon: '🧱',
+    tags: ['game', 'puzzle', 'classic', 'arcade', 'mobile-friendly'],
+    component: Tetris
   },
 }
