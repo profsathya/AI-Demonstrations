@@ -40,9 +40,17 @@ import TransitFlow from './transit-flow/TransitFlow'
 import TAConnect from './ta-connect/TAConnect'
 import Solitaire from './solitaire/Solitaire'
 import Tetris from './tetris/Tetris'
+import CampusCompass from './campus-compass/CampusCompass'
 
 // Register all demos here
 export const demos = {
+  'campus-compass': {
+    title: 'Campus Compass',
+    description: 'A student resource navigator: ask in plain language, browse the full campus directory, get recommendations for your situation, and track the deadlines that cost money when missed.',
+    icon: '🧭',
+    tags: ['education', 'search', 'student life', 'mobile-friendly'],
+    component: CampusCompass
+  },
   'build-story': {
     title: 'How This Was Built',
     description: 'An interactive story of the human-AI collaboration that created these demos. See the conversation, decisions, and technology behind it all.',
