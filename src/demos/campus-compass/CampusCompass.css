@@ -1,0 +1,802 @@
+/* Campus Compass — mobile-first, expands to a wider layout on desktop. */
+
+.campus-compass {
+  max-width: 860px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+/* ------------------------------------------------------------------ header */
+
+.cc-header {
+  padding: 0.75rem 0 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.cc-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cc-logo {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.cc-brand h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  background: linear-gradient(135deg, #6366f1, #22c55e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cc-tagline {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Sticks below the site header (65px tall) so the sections stay reachable
+   while scrolling a long directory. */
+.cc-tabs {
+  position: sticky;
+  top: 65px;
+  z-index: 5;
+  display: flex;
+  background: var(--background);
+  padding-top: 0.4rem;
+  gap: 0.35rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0.15rem;
+}
+
+.cc-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.cc-tab {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.cc-tab:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.cc-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.cc-badge {
+  min-width: 1.25rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.cc-tab:not(.active) .cc-badge {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------ panels */
+
+.cc-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cc-intro h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.cc-intro p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.cc-intro.tight p {
+  font-size: 0.9rem;
+}
+
+.cc-section-title {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.cc-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cc-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+.cc-disclaimer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------- chips */
+
+.cc-starters,
+.cc-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.cc-chip {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.cc-chip:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
+}
+
+.cc-chip.small {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.7rem;
+}
+
+.cc-chip.toggle.on {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: var(--primary);
+  color: var(--text);
+}
+
+.cc-textbtn {
+  border: none;
+  background: none;
+  color: var(--primary);
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+}
+
+.cc-textbtn:hover {
+  color: var(--secondary);
+}
+
+.cc-primary {
+  align-self: flex-start;
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.cc-primary:hover {
+  background: var(--primary-dark);
+}
+
+/* --------------------------------------------------------------- ask thread */
+
+.cc-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cc-question {
+  align-self: flex-end;
+  max-width: 85%;
+  margin-left: auto;
+  padding: 0.6rem 0.95rem;
+  border-radius: 16px 16px 4px 16px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.92rem;
+}
+
+.cc-answer {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.cc-answer.urgent {
+  border-left-color: var(--error);
+}
+
+.cc-urgent-note {
+  padding: 0.7rem 0.85rem;
+  margin-bottom: 0.85rem;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fecaca;
+  font-size: 0.85rem;
+}
+
+.cc-lead {
+  font-size: 0.95rem;
+  margin-bottom: 0.9rem;
+}
+
+.cc-source {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.cc-followups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+
+.cc-followups > span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.cc-askbar {
+  position: sticky;
+  bottom: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.cc-askbar input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--background);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.cc-askbar input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.cc-askbar button {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.cc-askbar button:disabled {
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* -------------------------------------------------------------- search bar */
+
+.cc-searchbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.cc-searchbar input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.cc-searchbar input:focus {
+  outline: none;
+}
+
+.cc-clear {
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* ---------------------------------------------------------------- category */
+
+.cc-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.cc-category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.cc-category-card:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.cc-category-icon {
+  font-size: 1.5rem;
+}
+
+.cc-category-blurb {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.cc-count {
+  margin-top: 0.35rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------------------- cards */
+
+.cc-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cc-card {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.cc-card:hover {
+  background: var(--surface-hover);
+}
+
+.cc-card-main {
+  flex: 1;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem;
+  border: none;
+  background: none;
+  color: var(--text);
+  text-align: left;
+}
+
+.cc-card-icon {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.cc-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.cc-card-text strong {
+  font-size: 0.95rem;
+}
+
+.cc-card-blurb {
+  color: var(--text-muted);
+  font-size: 0.83rem;
+  line-height: 1.4;
+}
+
+.cc-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.15rem;
+}
+
+.cc-pill {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.cc-pill.soft {
+  background: rgba(99, 102, 241, 0.15);
+  color: #c7d2fe;
+}
+
+.cc-pill.urgent {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fecaca;
+}
+
+.cc-save {
+  flex: 0 0 auto;
+  padding: 0 0.9rem;
+  border: none;
+  border-left: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.cc-save:hover,
+.cc-save.on {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------ detail */
+
+.cc-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cc-detail .cc-save {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+.cc-detail-header {
+  display: flex;
+  gap: 0.9rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cc-detail-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.cc-detail-header h2 {
+  font-size: 1.4rem;
+  margin: 0.35rem 0 0.3rem;
+}
+
+.cc-detail-blurb {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.cc-firststep {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(34, 197, 94, 0.12);
+  border-left: 3px solid var(--success);
+}
+
+.cc-firststep strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--success);
+  margin-bottom: 0.25rem;
+}
+
+.cc-firststep p {
+  font-size: 0.92rem;
+}
+
+.cc-detail-description {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.cc-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.cc-facts dt {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cc-facts dd {
+  font-size: 0.9rem;
+}
+
+.cc-detail-subhead {
+  font-size: 0.95rem;
+  margin-bottom: -0.35rem;
+}
+
+.cc-detail-deadlines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.cc-detail-deadlines li {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 0.88rem;
+}
+
+.cc-detail-deadlines span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.cc-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cc-related-btn {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.cc-related-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
+}
+
+/* --------------------------------------------------------------- deadlines */
+
+.cc-deadlines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.cc-deadline {
+  display: flex;
+  gap: 0.85rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.cc-deadline.soon {
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.cc-countdown {
+  flex: 0 0 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+}
+
+.cc-countdown strong {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.cc-countdown span {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cc-deadline-body h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.cc-deadline-date {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.cc-deadline-note {
+  font-size: 0.85rem;
+  margin: 0.35rem 0 0.2rem;
+}
+
+/* --------------------------------------------------------------- fieldsets */
+
+.cc-fieldset {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.cc-fieldset legend {
+  padding: 0 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ------------------------------------------------------------ empty states */
+
+.cc-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.cc-empty-state span {
+  font-size: 2.5rem;
+}
+
+.cc-empty-state p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.cc-empty-state .cc-primary {
+  align-self: center;
+  margin-top: 0.5rem;
+}
+
+/* ------------------------------------------------------------------- about */
+
+.cc-about h2 {
+  font-size: 1.3rem;
+}
+
+.cc-about h3 {
+  font-size: 1rem;
+  margin-top: 0.75rem;
+  color: var(--primary);
+}
+
+.cc-about p,
+.cc-about li {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.cc-about ul {
+  padding-left: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cc-about strong {
+  color: var(--text);
+}
+
+.cc-stats li strong {
+  color: var(--success);
+}
+
+/* ------------------------------------------------------------------ layout */
+
+@media (min-width: 640px) {
+  .cc-facts {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cc-brand h1 {
+    font-size: 1.7rem;
+  }
+
+  .cc-detail-deadlines li {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cc-tab {
+    padding: 0.45rem 0.7rem;
+  }
+
+  .cc-tab-label {
+    font-size: 0.78rem;
+  }
+
+  .cc-category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+  }
+}
