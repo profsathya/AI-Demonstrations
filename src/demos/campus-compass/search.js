@@ -142,8 +142,6 @@ const SYNONYMS = {
   clubs: ['student life', 'events'],
   scholarship: ['scholarships', 'award', 'essay'],
   fafsa: ['financial aid', 'grant'],
-  emergency: ['emergency', 'crisis', 'urgent'],
-  urgent: ['emergency', 'crisis'],
   legal: ['legal clinic', 'attorney'],
   lawyer: ['legal clinic', 'attorney']
 }
@@ -241,9 +239,18 @@ function fieldText(resource) {
 
 const INDEX = RESOURCES.map(resource => ({ resource, fields: fieldText(resource) }))
 
+const URGENT_PHRASES = URGENT_SIGNALS.filter(s => s.includes(' '))
+const URGENT_WORDS = new Set(URGENT_SIGNALS.filter(s => !s.includes(' ')))
+
+/**
+ * Whether the query reads like a crisis. Single words match whole words only —
+ * substring matching would read "panic" inside "Hispanic" and show a student
+ * searching for scholarships a crisis warning.
+ */
 export function isUrgentQuery(query) {
   const normalized = normalize(query)
-  return URGENT_SIGNALS.some(signal => normalized.includes(signal))
+  if (URGENT_PHRASES.some(phrase => normalized.includes(phrase))) return true
+  return normalized.split(' ').some(word => URGENT_WORDS.has(word))
 }
 
 /**
@@ -298,7 +305,6 @@ export function searchResources(query, { limit = 8, minScore = 1.5, relativeFloo
  */
 export function answerQuestion(query) {
   const results = searchResources(query, { limit: 4 })
-  const urgent = isUrgentQuery(query)
 
   if (results.length === 0) {
     return {
@@ -312,6 +318,12 @@ export function answerQuestion(query) {
 
   const top = results[0].resource
   const category = CATEGORY_BY_ID[top.category]
+
+  // The crisis response promises same-day help with no paperwork. Only the
+  // records marked `urgent` support that claim, so the banner and the lead are
+  // gated on the office actually being one of them — crisis phrasing alone is
+  // not enough.
+  const urgent = isUrgentQuery(query) && Boolean(top.urgent)
 
   let lead
   if (urgent) {
